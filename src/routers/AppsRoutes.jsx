@@ -6,6 +6,9 @@ import Login from '../pages/auth/Login'
 import PrivateRoutes from './PrivateRoutes'
 import HomeMedico from '../pages/medico/HomeMedico'
 import HomeAdmin from '../pages/admin/HomeAdmin'
+import Agenda from '../pages/patient/Agenda'
+import Historial from '../pages/patient/Historial'
+import Perfil from '../pages/patient/Perfil'
 
 const AppsRoutes = () => {
 
@@ -32,7 +35,12 @@ const AppsRoutes = () => {
                     <PrivateRoutes allowedRole={["paciente"]}>
                         <HomePatient />
                     </PrivateRoutes>
+
                 }> 
+                <Route path='agenda' element={<Agenda/>} />
+                <Route path='historial' element={<Historial/>} />
+                <Route path='medicos' element={<Historial/>} />
+                <Route path='perfil' element={<Perfil/>} />
                 <Route path='create' element={<h1>Create Profile</h1>} />
                 <Route path='list/' element={<>List Profile</>} />
                 <Route path='update/:id' element={<>Update Profile</>} />
