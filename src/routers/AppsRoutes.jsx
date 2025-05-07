@@ -1,0 +1,58 @@
+import { Home } from 'lucide-react'
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import HomePatient from '../pages/patient/HomePatient'
+import Login from '../pages/auth/Login'
+import PrivateRoutes from './PrivateRoutes'
+import HomeMedico from '../pages/medico/HomeMedico'
+import HomeAdmin from '../pages/admin/HomeAdmin'
+
+const AppsRoutes = () => {
+
+    return (
+        <Routes>
+            <Route path="/" element={<Login/>} />
+            <Route path="/register" element={<h1>Register User</h1>} />
+            <Route path="/register-profile" element={<h1>Register Data User</h1>} />
+
+
+            {/* Rutas para el administrador */}
+            <Route path="/admin" 
+                element={
+                    <PrivateRoutes allowedRole={["admin"]}>
+                        <HomeAdmin/>
+                    </PrivateRoutes>
+                    } > 
+            
+            </Route>
+
+            {/* Rutas para los pacientes */}
+            <Route path="/patient" 
+                element={
+                    <PrivateRoutes allowedRole={["paciente"]}>
+                        <HomePatient />
+                    </PrivateRoutes>
+                }> 
+                <Route path='create' element={<h1>Create Profile</h1>} />
+                <Route path='list/' element={<>List Profile</>} />
+                <Route path='update/:id' element={<>Update Profile</>} />
+                <Route path='delete/:id' element={<>Delete Profile</>} />
+            
+            </Route>
+
+            {/* Rutas para los medicos */}
+            <Route path="/medico"
+                element={
+                    <PrivateRoutes allowedRole={["medico"]}>
+                        <HomeMedico/>
+                    </PrivateRoutes>
+                }> 
+                
+            </Route>
+
+            <Route path='*' element={<h1>Page Not Found</h1>} />
+        </Routes>
+    )
+}
+
+export default AppsRoutes
