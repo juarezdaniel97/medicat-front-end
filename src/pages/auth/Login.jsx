@@ -59,8 +59,8 @@ const Login = () => {
                     medico@gmail.com <br />
                     medico
                     <hr />
-                    probando@gmail.com <br />
-                    daniel
+                    paciente@gmail.com <br />
+                    paciente
                 </p>
             </div>
         </div>
