@@ -7,7 +7,8 @@ import { jwtDecode } from "jwt-decode";
 export const usePatient = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    
+    const [dataPatient, setDataPatient] = useState(null);
+    const [agenda, setAgenda] = useState(null);
 
 
     const getAppointment = async (id) => {
@@ -35,7 +36,6 @@ export const usePatient = () => {
         setError(null);
 
         try {
-            console.log('entro a a la funcion getPatient');
             
             const token = localStorage.getItem("token");
             const decoded = jwtDecode(token);
@@ -60,6 +60,10 @@ export const usePatient = () => {
         getAppointment,
         getPatient,
         loading,
-        error
+        error,
+        dataPatient,
+        setDataPatient,
+        agenda,
+        setAgenda
     };
 }

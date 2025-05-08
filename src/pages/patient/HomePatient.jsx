@@ -1,11 +1,17 @@
-import React, { use, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext';
+import { usePatientContext } from '../../contexts/PatientContext';
+import { set } from 'react-hook-form';
 
 const HomePatient = () => {
-    const [activeTab, setActiveTab] = useState("agenda");
-
+    
     const {logout} = useAuthContext();
+    
+    const { getAppointment, getPatient, setAgenda, setDataPatient } = usePatientContext();
+    
+    const [activeTab, setActiveTab] = useState("agenda");
+    
     const navigate = useNavigate();
     
     const handleLogout = () =>{
@@ -13,7 +19,21 @@ const HomePatient = () => {
         navigate("/");
     }
 
+    useEffect(() => {
+        //Hacer Petición a la API para obtener Agenda - Historial - Medicos - Perfil
+        const fetchDataPatient = async () => {
+            // Obtener el paciente
+            const patient = await getPatient();
+            setDataPatient(patient.profileUser);
+            
+            // Obtener la agenda del paciente
+            const appointment = await getAppointment(patient.profileUser._id); 
+            setAgenda(appointment);
+        };
 
+        fetchDataPatient();
+    }, [])
+    
     return (
         <>
             {/* Header */}

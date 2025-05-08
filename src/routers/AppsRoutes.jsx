@@ -1,6 +1,6 @@
 import { Home } from 'lucide-react'
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import HomePatient from '../pages/patient/HomePatient'
 import Login from '../pages/auth/Login'
 import PrivateRoutes from './PrivateRoutes'
@@ -38,6 +38,8 @@ const AppsRoutes = () => {
                     </PrivateRoutes>
 
                 }> 
+                {/* Redirige automaticamente al cargar la página */}
+                <Route index element={<Navigate to="agenda" replace />} /> 
                 <Route path='agenda' element={<Agenda/>} />
                 <Route path='historial' element={<Historial/>} />
                 <Route path='medicos' element={<ListMedicos/>} />
