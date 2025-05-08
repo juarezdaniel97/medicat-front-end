@@ -59,11 +59,9 @@ export const useAuth = () =>{
 
             //Configurar el token en los headers de las peticiones
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            //api_profile.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             api_patient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
             //Obtener los datos del perfil del usuario
-            //const responseProfile = await getProfileApi(decoded.id);
             const responsePatient = await getPatientApi(decoded.id);
 
             setUserData(responsePatient.data);
