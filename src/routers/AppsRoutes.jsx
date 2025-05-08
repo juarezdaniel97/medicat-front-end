@@ -9,6 +9,7 @@ import HomeAdmin from '../pages/admin/HomeAdmin'
 import Agenda from '../pages/patient/Agenda'
 import Historial from '../pages/patient/Historial'
 import Perfil from '../pages/patient/Perfil'
+import ListMedicos from '../pages/medico/ListMedicos'
 
 const AppsRoutes = () => {
 
@@ -39,7 +40,7 @@ const AppsRoutes = () => {
                 }> 
                 <Route path='agenda' element={<Agenda/>} />
                 <Route path='historial' element={<Historial/>} />
-                <Route path='medicos' element={<Historial/>} />
+                <Route path='medicos' element={<ListMedicos/>} />
                 <Route path='perfil' element={<Perfil/>} />
                 <Route path='create' element={<h1>Create Profile</h1>} />
                 <Route path='list/' element={<>List Profile</>} />
