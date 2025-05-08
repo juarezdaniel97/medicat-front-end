@@ -2,18 +2,10 @@ import React, { use, useEffect } from 'react'
 import { useMedicoContext } from '../../contexts/MedicoContext'
 
 const ListMedicos = () => {
-    const { medicos, ListMedicos } = useMedicoContext();
-    console.log('medicos -->', medicos);
-    
-    useEffect(() => {
-        const fetchMedicos = async () => {
-            const listado = await ListMedicos();
-            console.log('listado -->', listado);
-        }
-        fetchMedicos();
-    }, [])
+    const { medicos } = useMedicoContext();
     
     const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+    
     return (
         <div>
             <h1>Listado de Médicos</h1>
