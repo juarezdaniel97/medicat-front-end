@@ -60,7 +60,7 @@ export const usePatient = () => {
     const createPatient = async (data) =>{
         setLoading(true);
         setError(null);
-
+        setSuccess(null)
         try {
             const token = localStorage.getItem("token");
             api_patient.defaults.headers.common["Authorization"] = `Bearer ${token}`;

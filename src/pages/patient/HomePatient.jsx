@@ -1,13 +1,15 @@
-import React, { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext';
 import { usePatientContext } from '../../contexts/PatientContext';
-import { set } from 'react-hook-form';
 import { useMedicoContext } from '../../contexts/MedicoContext';
+
+
+
 
 const HomePatient = () => {
     
-    const {logout} = useAuthContext();
+    const { logout, success:messageSuccess, setSuccess } = useAuthContext();
     
     const { getAppointment, getPatient, setAgenda, setDataPatient } = usePatientContext();
     const { ListMedicos, setMedicos } = useMedicoContext();
@@ -22,9 +24,8 @@ const HomePatient = () => {
     }
 
     useEffect(() => {
-
+        
         //Hacer Petición a la API para obtener Agenda - Historial - Medicos - Perfil
-
         const fetchDataPatient = async () => {
             
             // Obtener el paciente
@@ -41,7 +42,9 @@ const HomePatient = () => {
         };
 
         fetchDataPatient();
+
     }, [])
+    
     
     return (
         <>

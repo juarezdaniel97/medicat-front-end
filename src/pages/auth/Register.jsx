@@ -1,12 +1,22 @@
 import { useForm } from 'react-hook-form'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const Register = () => {
-    const { addUser, error } = useAuthContext();
+    const { addUser, error, success: messageSuccess } = useAuthContext();
     const {register, handleSubmit, formState: { errors }, watch } = useForm();
 
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (messageSuccess) {
+            toast.success(messageSuccess);
+        }
+    }, [messageSuccess])
+    
 
     const onSubmit = async (data) => {
         

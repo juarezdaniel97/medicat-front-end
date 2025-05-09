@@ -1,14 +1,12 @@
-import React from 'react'
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const { login, loading, error, success } = useAuthContext();
+    const { login, loading, error } = useAuthContext();
     const {register, handleSubmit, formState:{errors}} = useForm();
 
-    const navigate = useNavigate();
-
+    const navigate = useNavigate();    
 
     const onSubmit = async (data) => {
         const { email, password } = data;

@@ -2,13 +2,23 @@ import { useForm } from 'react-hook-form'
 import { usePatientContext } from '../../contexts/PatientContext';
 import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const FormPatient = () => {
 
-    const { createPatient, loading, error } = usePatientContext();
+    const { createPatient, loading, error, success: messageSuccess } = usePatientContext();
     const {register, handleSubmit, formState: {errors} } = useForm();
 
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if(messageSuccess){
+            toast.success(messageSuccess)
+        }
+    }, [messageSuccess])
+    
 
     const onSubmit = async (data) => {
         const userData = {
@@ -28,7 +38,7 @@ const FormPatient = () => {
         const response = await createPatient(userData);
 
         if (response){
-            navigate('/patient/perfil');
+            navigate('/patient');
         }
         //navigate("/patient")
     }
