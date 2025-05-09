@@ -10,17 +10,18 @@ const Register = () => {
 
     const onSubmit = async (data) => {
         
-            const response = await addUser(data);
+        const response = await addUser(data);
             
-                if (response) {
-                navigate("/selector-profile", { replace: true });
+            if (response) {
+                navigate("/selector-profile");
             }
+        //navigate("/selector-profile", { replace: true });
     }    
 
     return (
         <div>
-            <h1>Registro</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+            <h1>Registro Usuario</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 {
                     error && 
                     (
@@ -30,12 +31,12 @@ const Register = () => {
                     )
                 }
                 <div>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">Email: </label>
                     <input type="email" id="email" {...register("email", { required: true })} />
                     {errors.email && <span>Este campo es requerido</span>}
                 </div>
                 <div>
-                    <label htmlFor="password">Contraseña</label>
+                    <label htmlFor="password">Contraseña: </label>
                     <input type="password" id="password" {...register("password", { required: true })} />
                     {errors.password && <span>Este campo es requerido</span>}
                 </div>

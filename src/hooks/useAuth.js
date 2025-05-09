@@ -51,7 +51,7 @@ export const useAuth = () =>{
         setSuccess(null);
 
         try {
-            // Verificar si el usuario ya está autenticado
+            
             const response = await loginUser({ email, password });
             const { token } = response.data;
             const decoded = jwtDecode(token);
@@ -99,13 +99,13 @@ export const useAuth = () =>{
 
             const decoded = jwtDecode(token);
 
-            setUser(decoded);
             localStorage.setItem("token", token);
 
-            //Configurar el token en los headers de las peticiones
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             
+            setUser(decoded);
             setSuccess(response.data.message);
+            setIsAuthenticated(true)
             
             return true;
 

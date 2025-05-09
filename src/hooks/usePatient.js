@@ -1,5 +1,5 @@
 import { set } from "react-hook-form";
-import api_patient, { getPatientApi, getPatientTurnoApi } from "../services/patient";
+import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi } from "../services/patient";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -9,6 +9,7 @@ export const usePatient = () => {
     const [error, setError] = useState(null);
     const [dataPatient, setDataPatient] = useState(null);
     const [agenda, setAgenda] = useState(null);
+    const [success, setSuccess] = useState(null);
 
 
     const getAppointment = async (id) => {
@@ -54,7 +55,31 @@ export const usePatient = () => {
         } finally {
             setLoading(false);
         }
-    }  
+    } 
+    
+    const createPatient = async (data) =>{
+        setLoading(true);
+        setError(null);
+
+        try {
+            const token = localStorage.getItem("token");
+            api_patient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+            const response = await createPatientApi(data);
+
+            setSuccess("Datos creados correctamente");
+            return response.data;
+
+
+        } catch (err) {
+            console.error("Error durante el registr de datos del paciente. ", err);
+            const errorMessage = `${ err.response?.data?.message}, ${err.response?.data?.error}` || "Error al registrar datos del paciente";
+            setError(errorMessage);
+            
+        }finally {
+            setLoading(false);
+        }
+    }
 
     return {
         getAppointment,
@@ -64,6 +89,8 @@ export const usePatient = () => {
         dataPatient,
         setDataPatient,
         agenda,
-        setAgenda
+        setAgenda,
+        createPatient,
+        success
     };
 }

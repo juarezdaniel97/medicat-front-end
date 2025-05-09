@@ -3,7 +3,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 
 const SelectorProfile = () => {
     
-    const {logout} = useAuthContext();
+    const {logout, success} = useAuthContext();
     const navigate = useNavigate();
 
     
@@ -11,6 +11,9 @@ const SelectorProfile = () => {
         logout();
         navigate("/");
     }
+
+    console.log("success - registro: -->", success);
+    
 
         return (
         <>
@@ -29,17 +32,19 @@ const SelectorProfile = () => {
                 <p className='text-lg'>Por favor selecciona un perfil para continuar</p>
                 <div className='flex flex-col gap-4 mt-4'>
                     <button 
-                        onClick={() => navigate("/register-profile")}
+                        onClick={() => navigate("/register-profile", {state: {profile: "paciente"}})}
                         className='bg-blue-500 text-white rounded p-2 cursor-pointer'>
                             Paciente
                     </button>
                     
-                    <button 
+                    <button
+                        onClick={() => navigate("/register-profile", {state: {profile: "medico"}})} 
                         className='bg-blue-500 text-white rounded p-2 cursor-pointer'>
                             Medico
                     </button>
                     
                     <button 
+                        onClick={() => navigate("/register-profile", {state: {profile: "administrador"}})}
                         className='bg-blue-500 text-white rounded p-2 cursor-pointer'>
                             Administrador
                     </button>
