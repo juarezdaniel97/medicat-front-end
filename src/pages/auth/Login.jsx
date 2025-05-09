@@ -62,6 +62,10 @@ const Login = () => {
                     paciente@gmail.com <br />
                     paciente
                 </p>
+                <p className='text-sm text-center mt-4'>
+                    ¿No tienes una cuenta? <br />
+                    <span className='text-blue-500 cursor-pointer' onClick={() => navigate("/register")}>Registrate</span>
+                </p>
             </div>
         </div>
     )

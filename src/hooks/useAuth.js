@@ -93,23 +93,30 @@ export const useAuth = () =>{
 
         try {
             
-            
-            //const response = await registerUser(data);
-            //const { token } = response.data;
-            //const decoded = jwtDecode(token);
-            //localStorage.setItem("token", token);
+            const response = await registerUser(data);
+
+            const { token } = response.data.data;
+
+            const decoded = jwtDecode(token);
+
+            setUser(decoded);
+            localStorage.setItem("token", token);
 
             //Configurar el token en los headers de las peticiones
-            //api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             
-            //setUser(decoded);
-            //setSuccess(res.data.message);
-            
+            setSuccess(response.data.message);
             
             return true;
 
-        } catch (error) {
-            
+        } catch (err) {
+            console.error("Error durante el registro. ", err);
+            const errorMessage = `${ err.response?.data?.message}, ${err.response?.data?.error}` || "Error al registrar usuario";
+            setError(errorMessage);
+            return false;
+
+        } finally{
+            setLoading(false)
         }
     }
 
@@ -117,6 +124,7 @@ export const useAuth = () =>{
     return {
         login,
         logout,
+        addUser,
         user,
         loading,
         error,

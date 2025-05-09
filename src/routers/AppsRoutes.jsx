@@ -10,14 +10,18 @@ import Agenda from '../pages/patient/Agenda'
 import Historial from '../pages/patient/Historial'
 import Perfil from '../pages/patient/Perfil'
 import ListMedicos from '../pages/medico/ListMedicos'
+import RegisterProfile from '../pages/auth/RegisterProfile'
+import SelectorProfile from '../components/ui/SelectorProfile'
+import Register from '../pages/auth/Register'
 
 const AppsRoutes = () => {
 
     return (
         <Routes>
             <Route path="/" element={<Login/>} />
-            <Route path="/register" element={<h1>Register User</h1>} />
-            <Route path="/register-profile" element={<h1>Register Data User</h1>} />
+            <Route path="/register" element={<Register/>} />
+            <Route path="/selector-profile" element={<SelectorProfile/>} />
+            <Route path="/register-profile" element={<RegisterProfile/>} />
 
 
             {/* Rutas para el administrador */}
