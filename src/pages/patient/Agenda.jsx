@@ -1,9 +1,7 @@
-import React, { use, useEffect, useState } from 'react'
 import { usePatientContext } from '../../contexts/PatientContext';
 
 const Agenda = () => {
-    const { getAppointment, getPatient, loading, error, agenda } = usePatientContext();
-
+    const { loading, error, agenda } = usePatientContext();
     
     return (
         <div>

@@ -1,6 +1,8 @@
 import { jwtDecode } from "jwt-decode"
 import { useEffect, useState } from "react"
-import api, { loginUser } from "../services/auth";
+import api, { loginUser, registerUser } from "../services/auth";
+import { set } from "react-hook-form";
+import { roleMap } from "../utils/roleMap";
 
 
 
@@ -82,6 +84,33 @@ export const useAuth = () =>{
             localStorage.removeItem("user");
             setIsAuthenticated(false);
             delete api.defaults.headers.common["Authorization"]
+    }
+
+    const addUser = async (data) =>{
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            
+            
+            //const response = await registerUser(data);
+            //const { token } = response.data;
+            //const decoded = jwtDecode(token);
+            //localStorage.setItem("token", token);
+
+            //Configurar el token en los headers de las peticiones
+            //api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            
+            //setUser(decoded);
+            //setSuccess(res.data.message);
+            
+            
+            return true;
+
+        } catch (error) {
+            
+        }
     }
 
 
