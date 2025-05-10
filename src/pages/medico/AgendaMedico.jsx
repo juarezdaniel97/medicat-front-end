@@ -19,7 +19,7 @@ const AgendaMedico = () => {
                             agenda.map((turno, index) => (
                                 <li key={index} className='p-2 m-2 bg-gray-100 rounded'>
                                 <p>Fecha: {turno.fecha}</p>
-                                <p>Paciente: {turno.medico}</p>
+                                <p>Paciente: {turno.paciente.nombreCompleto}</p>
                                 <p>estado: {turno.estado}</p>
                                 <p>Motivo: {turno.motivo}</p>
                             </li>

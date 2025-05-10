@@ -24,9 +24,11 @@ const HomeMedico = () => {
             //Obtener el médico
             const medico = await getMedico();
             setDataMedico(medico.profileUser);
-
+            
             //Obtener Agenda de turnos del médico
             const appointments = await getTurnosAsociados(medico.profileUser._id);
+            console.log('turno asociado -->', appointments);
+            
             setAgenda(appointments);
 
             //Obtener listado de Pacientes

@@ -36,13 +36,22 @@ export const useMedico = () =>{
     }
 
     const getTurnosAsociados = async (id) => {
+        setLoading(true);
+        setError(null);
+
         try {
+            const token = localStorage.getItem("token");
+            api_Medico.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             const response = await getMedicoTurnoApi(id);
-            console.log('response -->', response.data);
+            return response.data;
             
 
         } catch (error) {
-            console.log('Error al obtener los turnos asociados', error);
+            console.error("Error al obtener turnos del médico", error);
+            setError(error.response.data.message || "Error al obtener turnos del médico");
+            return false;
+        }finally{
+            setLoading(false);
         }
     }
 
