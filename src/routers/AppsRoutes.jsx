@@ -13,6 +13,9 @@ import ListMedicos from '../pages/medico/ListMedicos'
 import RegisterProfile from '../pages/auth/RegisterProfile'
 import SelectorProfile from '../components/ui/SelectorProfile'
 import Register from '../pages/auth/Register'
+import AgendaMedico from '../pages/medico/AgendaMedico'
+import ListPatient from '../pages/patient/ListPatient'
+import PerfilMedico from '../pages/medico/PerfilMedico'
 
 const AppsRoutes = () => {
 
@@ -62,7 +65,10 @@ const AppsRoutes = () => {
                         <HomeMedico/>
                     </PrivateRoutes>
                 }> 
-                
+                <Route index element={<Navigate to="agenda" replace/>}/>
+                <Route path='agenda' element={<AgendaMedico/>} />
+                <Route path='pacientes' element={<ListPatient/>} />
+                <Route path='perfil' element={<PerfilMedico/>} />
             </Route>
 
             <Route path='*' element={<h1>Page Not Found</h1>} />
