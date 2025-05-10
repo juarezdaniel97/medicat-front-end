@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useAuthContext } from '../../contexts/AuthContext';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useMedicoContext } from '../../contexts/MedicoContext';
+import { usePatientContext } from '../../contexts/PatientContext';
 
 const HomeMedico = () => {
     
     const { logout } = useAuthContext();
     const { getMedico, setDataMedico, getTurnosAsociados, setAgenda} = useMedicoContext();
+    const { ListPatient, setPacientes  } = usePatientContext();
 
     const [activeTab, setActiveTab] = useState("agenda");
     
@@ -27,11 +29,11 @@ const HomeMedico = () => {
             
             //Obtener Agenda de turnos del médico
             const appointments = await getTurnosAsociados(medico.profileUser._id);
-            console.log('turno asociado -->', appointments);
-            
             setAgenda(appointments);
 
             //Obtener listado de Pacientes
+            const listPacientes = await ListPatient();
+            setPacientes(listPacientes);
         };
 
         fetchDataMedico();
@@ -72,7 +74,7 @@ return (
                                 navigate("/medico/pacientes");
                             }}
                             >
-                            Medicos
+                            Pacientes
                         </button>
 
                         <button

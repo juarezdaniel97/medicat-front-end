@@ -9,7 +9,7 @@ import { useMedicoContext } from '../../contexts/MedicoContext';
 
 const HomePatient = () => {
     
-    const { logout, success:messageSuccess, setSuccess } = useAuthContext();
+    const { logout } = useAuthContext();
     
     const { getAppointment, getPatient, setAgenda, setDataPatient } = usePatientContext();
     const { ListMedicos, setMedicos } = useMedicoContext();

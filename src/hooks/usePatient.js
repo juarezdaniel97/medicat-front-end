@@ -1,4 +1,4 @@
-import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi } from "../services/patient";
+import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi, listPatientApi } from "../services/patient";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -9,6 +9,7 @@ export const usePatient = () => {
     const [dataPatient, setDataPatient] = useState(null);
     const [agenda, setAgenda] = useState(null);
     const [success, setSuccess] = useState(null);
+    const [pacientes, setPacientes] = useState(null);
 
 
     const getAppointment = async (id) => {
@@ -80,6 +81,26 @@ export const usePatient = () => {
         }
     }
 
+    const ListPatient = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const token = localStorage.getItem("token");
+            api_patient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            const response = await listPatientApi();
+            return response.data;
+
+        } catch (error) {
+            console.error("Error al obtener listado de pacientes", error);
+            setError(error.response.data.message || "Error al obtener listado de pacientes");
+            return false;
+
+        }finally{
+            setLoading(false);
+        }
+    }
+
     return {
         getAppointment,
         getPatient,
@@ -90,6 +111,9 @@ export const usePatient = () => {
         agenda,
         setAgenda,
         createPatient,
-        success
+        success,
+        ListPatient,
+        pacientes,
+        setPacientes
     };
 }

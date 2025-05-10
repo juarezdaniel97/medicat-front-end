@@ -1,8 +1,8 @@
-import React, { use, useEffect } from 'react'
+
 import { useMedicoContext } from '../../contexts/MedicoContext'
 
 const ListMedicos = () => {
-    const { medicos } = useMedicoContext();
+    const { medicos, loading } = useMedicoContext();
     
     const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
     
@@ -25,6 +25,8 @@ const ListMedicos = () => {
                     </ul>
                 </div>
             ))}
+
+            {/* Añadir el loading y un <p> cuando no hay medicos disponibles */}
         </div>
     )
 }
