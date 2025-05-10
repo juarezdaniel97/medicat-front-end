@@ -6,7 +6,7 @@ import { useMedicoContext } from '../../contexts/MedicoContext';
 const HomeMedico = () => {
     
     const { logout } = useAuthContext();
-    const { getMedico, setDataMedico} = useMedicoContext();
+    const { getMedico, setDataMedico, getTurnosAsociados, setAgenda} = useMedicoContext();
 
     const [activeTab, setActiveTab] = useState("agenda");
     
@@ -24,6 +24,12 @@ const HomeMedico = () => {
             //Obtener el médico
             const medico = await getMedico();
             setDataMedico(medico.profileUser);
+
+            //Obtener Agenda de turnos del médico
+            const appointments = await getTurnosAsociados(medico.profileUser._id);
+            setAgenda(appointments);
+
+            //Obtener listado de Pacientes
         };
 
         fetchDataMedico();
@@ -66,7 +72,6 @@ return (
                             >
                             Medicos
                         </button>
-                        
 
                         <button
                             className={`p-2 m-2 ${activeTab === "perfil" ? "bg-blue-500 text-white" : "bg-gray-200"}`}

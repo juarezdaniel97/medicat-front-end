@@ -8,7 +8,7 @@ export const useMedico = () =>{
     const [error, setError] = useState(null);
     const [medicos, setMedicos] = useState(null);
     const [dataMedico, setDataMedico] = useState(null);
-
+    const [agenda, setAgenda] = useState(null)
     
     const getMedico = async () =>{
         setLoading(true)
@@ -73,6 +73,8 @@ export const useMedico = () =>{
         setMedicos,
         ListMedicos,
         getTurnosAsociados,
+        setAgenda,
+        agenda,
         getMedico,
         setDataMedico,
         dataMedico
