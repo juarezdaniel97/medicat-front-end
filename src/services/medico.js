@@ -8,8 +8,8 @@ const api_Medico = axios.create({
     }
 })
 
-export const listProfileApi = () => api_Medico.get(`/medico/list`);
-export const getProfileApi = (id) => api_Medico.get(`/medico/${id}`);
+export const listMedicosApi = () => api_Medico.get(`/medico/list`);
+export const getMedicoApi = (id) => api_Medico.get(`/medico/${id}`);
 export const getMedicoTurnoApi = (id) => api_Medico.get(`/paciente/turno/${id}`);
 export const updateProfileApi = (id, data) => api_Medico.put(`/medico/update/${id}`, data);
 export const deleteProfileApi = (id) => api_Medico.delete(`/medico/delete/${id}`);

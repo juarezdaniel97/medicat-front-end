@@ -1,4 +1,3 @@
-import { set } from "react-hook-form";
 import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi } from "../services/patient";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";

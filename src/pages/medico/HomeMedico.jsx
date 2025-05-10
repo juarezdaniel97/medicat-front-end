@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthContext } from '../../contexts/AuthContext';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useMedicoContext } from '../../contexts/MedicoContext';
 
 const HomeMedico = () => {
-    const { user, logout } = useAuthContext();
     
+    const { logout } = useAuthContext();
+    const { getMedico, setDataMedico} = useMedicoContext();
+
     const [activeTab, setActiveTab] = useState("agenda");
     
     const navigate = useNavigate();
@@ -14,6 +17,19 @@ const HomeMedico = () => {
         logout();
         navigate('/login');
     };
+
+    useEffect(() => {
+        const fetchDataMedico = async () => {
+            
+            //Obtener el médico
+            const medico = await getMedico();
+            setDataMedico(medico.profileUser);
+        };
+
+        fetchDataMedico();
+
+    }, [])
+    
 
 return (
     <div>
