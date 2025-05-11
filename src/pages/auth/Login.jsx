@@ -1,6 +1,8 @@
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
 
 const Login = () => {
     const { login, loading, error } = useAuthContext();
@@ -18,6 +20,9 @@ const Login = () => {
     }
 
     return (
+        <>
+        <Header/>
+        
         <div className='flex flex-col justify-center items-center h-screen bg-gray-200 '>
             <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96'>
                 <h1 className='font-medium mb-4 text-center'>Login</h1>
@@ -66,6 +71,9 @@ const Login = () => {
                 </p>
             </div>
         </div>
+
+        <Footer/>
+        </>
     )
 }
 

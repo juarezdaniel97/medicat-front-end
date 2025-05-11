@@ -6,17 +6,20 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { MedicoContextProvider } from './contexts/MedicoContext.jsx'
 import { PatientContextProvider } from './contexts/PatientContext.jsx'
+import { ThemeContextProvider } from './contexts/ThemeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
-        <MedicoContextProvider>
-          <PatientContextProvider>
-            <App />
-          </PatientContextProvider>
-        </MedicoContextProvider>
+      <ThemeContextProvider>
+        <AuthContextProvider>
+          <MedicoContextProvider>
+            <PatientContextProvider>
+              <App />
+            </PatientContextProvider>
+          </MedicoContextProvider>
       </AuthContextProvider>
+      </ThemeContextProvider>
     </BrowserRouter>
   </StrictMode>,
 )
