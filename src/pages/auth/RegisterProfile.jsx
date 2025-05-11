@@ -1,6 +1,7 @@
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import FormPatient from '../../components/forms/FormPatient';
+import FormMedico from '../../components/forms/FormMedico';
 
 const RegisterProfile = () => {
 
@@ -37,15 +38,7 @@ const RegisterProfile = () => {
                     <FormPatient/>
                 )}
                 {profileType === "medico" && (
-                    <form>
-                        <label>Nombre:</label>
-                        <input type="text" className="border p-2 mb-4" />
-                        <label>Especialidad:</label>
-                        <input type="text" className="border p-2 mb-4" />
-                        <label>Precio de consulta:</label>
-                        <input type="number" className="border p-2 mb-4" />
-                        {/* Otros campos específicos para médico */}
-                    </form>
+                    <FormMedico/>
                 )}
                 {profileType === "administrador" && (
                     <form>

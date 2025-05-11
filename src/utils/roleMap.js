@@ -2,19 +2,19 @@
 export const roleMap = {
     admin: {
         id: '681e007ba1731381e9991ca0',
-        name: 'Admin',
+        name: 'admin',
         description: 'Administrador del sistema',
         permissions: ['read', 'write', 'delete'],
     },
-    doctor: {
+    medico: {
         id: '681e007ba1731381e9991ca2',
-        name: 'Medico',
+        name: 'medico',
         description: 'Médico',
         permissions: ['read', 'write'],
     },
-    patient: {
+    paciente: {
         id:'681e007ba1731381e9991ca4',
-        name: 'Paciente',
+        name: 'paciente',
         description: 'Paciente del sistema',
         permissions: ['read'],
     },

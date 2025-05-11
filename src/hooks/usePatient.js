@@ -72,7 +72,7 @@ export const usePatient = () => {
 
 
         } catch (err) {
-            console.error("Error durante el registr de datos del paciente. ", err);
+            console.error("Error durante el registro de datos del paciente. ", err);
             const errorMessage = `${ err.response?.data?.message}, ${err.response?.data?.error}` || "Error al registrar datos del paciente";
             setError(errorMessage);
             
