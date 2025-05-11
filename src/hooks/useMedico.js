@@ -1,5 +1,5 @@
 import { useState } from "react"
-import api_Medico, { getMedicoApi, getMedicoTurnoApi, listMedicosApi } from "../services/medico"
+import api_Medico, { createProfileApi, getMedicoApi, getMedicoTurnoApi, listMedicosApi } from "../services/medico"
 import { jwtDecode } from "jwt-decode";
 import { roleMap } from "../utils/roleMap";
 import { getUser, updateUser } from "../services/auth";
@@ -76,15 +76,16 @@ export const useMedico = () =>{
 
             const decoded = jwtDecode(token);
             const { name } = decoded.role
-        
             
-            const roleData = roleMap['medico'] || { name: "unknown", description: "sin rol", permission: []}
             
             //Cuando se crea por primera vez un usuario y luego se crea un perfil de Médico debemos actualizar el rol
             if (name === 'paciente') {
+                
                 //Obtenemos el usuario para cambiarle el rol (de paciente a Medico)
                 const response = await getUser(decoded.id);
-
+                
+                const roleData = roleMap['medico'] || { name: "unknown", description: "sin rol", permission: []}
+                
                 const userData = {
                     email: response.data.user.email,
                     role: roleData.id
@@ -92,16 +93,22 @@ export const useMedico = () =>{
 
                 const userUpdate = await updateUser(decoded.id,userData)
                 console.log('userUpdate -->', userUpdate);
-
+                
                 //debemos crear el perfil
+                const responseProfile = await createProfileApi(data);
+
+                console.log('responseProfile -->', responseProfile);
+                setSuccess("Datos creados correctamente");
+                return responseProfile.data;
             }
 
-            
+            //Aquí crear medicos por parte del admin
 
         } catch (err) {
             console.error("Error durante el registro de datos del médico. ", err);
             const errorMessage = `${ err.response?.data?.message}, ${err.response?.data?.error}` || "Error al registrar datos del médico";
             setError(errorMessage);
+
         }finally{
             setLoading(false)
         }
