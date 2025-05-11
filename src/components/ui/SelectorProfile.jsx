@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const SelectorProfile = () => {
     
-    const {logout, success} = useAuthContext();
+    const {logout, success: messageSuccess, user} = useAuthContext();
     const navigate = useNavigate();
 
     
@@ -12,19 +14,25 @@ const SelectorProfile = () => {
         navigate("/");
     }
 
-    console.log("success - registro: -->", success);
+    useEffect(() => {
+        if (messageSuccess) {
+            toast.success(messageSuccess);
+        }
+    }, [messageSuccess])
     
 
         return (
         <>
             <div className='flex justify-between items-center bg-gray-200 p-4'>
                 <h1 className='text-2xl font-bold'>Selector - Profile</h1>
+                <p>{user?.email}</p>
                 <button
                     onClick={() => handleLogout()}
                     type='button' 
                     className='bg-red-500 text-white rounded p-2 m-2 cursor-pointer'>
+                        
                         Cerrar Sesión
-                    </button>
+                </button>
             </div>
 
             <div className='flex flex-col items-center justify-center h-screen'>

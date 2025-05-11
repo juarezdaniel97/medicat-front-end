@@ -53,14 +53,11 @@ export const useAuth = () =>{
         try {
             
             const response = await loginUser({ email, password });
-            const { token } = response.data;
-            const decoded = jwtDecode(token);
+            const { token, user:userResponse } = response.data;
+            
             localStorage.setItem("token", token);
 
-            //Configurar el token en los headers de las peticiones
-            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            
-            setUser(decoded);
+            setUser(userResponse);
             setSuccess("Login exitoso");
             setIsAuthenticated(true);
             
@@ -95,15 +92,11 @@ export const useAuth = () =>{
             
             const response = await registerUser(data);
 
-            const { token } = response.data.data;
-
-            const decoded = jwtDecode(token);
-
-            localStorage.setItem("token", token);
-
-            api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            const { token, user:userResponse } = response.data.data;
             
-            setUser(decoded);
+            localStorage.setItem("token", token);
+            
+            setUser(userResponse);
             setSuccess(response.data.message);
             setIsAuthenticated(true)
             

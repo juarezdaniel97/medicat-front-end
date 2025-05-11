@@ -10,7 +10,7 @@ const Login = () => {
         <Header/>
         
         <main className='flex flex-col justify-center items-center h-screen bg-gray-200 dark:bg-gray-800 '>
-            <div  className="bg-white dark:bg-gray-900 p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-md">
+            <div  className="bg-white dark:bg-gray-700 p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-md">
                 <div className="text-center mb-6 sm:mb-8">
                     <h1 className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">MediCat</h1>
                     <p className="text-gray-600 dark:text-gray-300 mt-2 text-sm sm:text-base">Inicia sesión en tu cuenta</p>

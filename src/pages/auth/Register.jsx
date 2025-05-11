@@ -1,8 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
+import FormRegisterUser from '../../components/forms/FormRegisterUser';
 
 const Register = () => {
     const { addUser, error, success: messageSuccess } = useAuthContext();
@@ -25,34 +28,37 @@ const Register = () => {
             if (response) {
                 navigate("/selector-profile");
             }
-        //navigate("/selector-profile", { replace: true });
     }    
 
     return (
-        <div>
-            <h1>Registro Usuario</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {
-                    error && 
-                    (
-                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-                            {error}
-                        </div>
-                    )
-                }
-                <div>
-                    <label htmlFor="email">Email: </label>
-                    <input type="email" id="email" {...register("email", { required: true })} />
-                    {errors.email && <span>Este campo es requerido</span>}
+
+        <>
+        <Header/>
+        
+        <main className='min-h-screen flex items-center justify-center px-4 py-6 sm:px-6 bg-gray-200 dark:bg-gray-800'>
+            <div className='bg-white dark:bg-gray-700 p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-md'>
+
+                <div className="text-center mb-6 sm:mb-8">
+                    <h1 className="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">MediCat</h1>
+                    <p className="text-gray-600 dark:text-gray-300 mt-2 text-sm sm:text-base">Crea tu cuenta</p>
                 </div>
-                <div>
-                    <label htmlFor="password">Contraseña: </label>
-                    <input type="password" id="password" {...register("password", { required: true })} />
-                    {errors.password && <span>Este campo es requerido</span>}
+
+                <FormRegisterUser/>
+
+                <div className="mt-6 text-center">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                        ¿Ya tienes una cuenta?{' '}
+                        
+                        <Link to="/" className='text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 font-medium'>
+                            Inicia sesión aquí
+                        </Link>
+                    </p>
                 </div>
-                <button className='bg-blue-400 py-6 px-2 cursor-pointer' type="submit">Registrar</button>
-            </form>
-        </div>
+            </div>
+        </main>
+
+        <Footer/>
+        </>
     )
 }
 
