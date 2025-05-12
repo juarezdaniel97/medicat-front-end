@@ -23,7 +23,7 @@ const AppsRoutes = () => {
         <Routes>
             <Route path="/" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
-            
+
             <Route path="/selector-profile" 
                 element={
                     <PrivateRoutes>
@@ -31,6 +31,7 @@ const AppsRoutes = () => {
                     </PrivateRoutes>
                 } 
             />
+            
 
             <Route path="/register-profile" 
                 element={
@@ -38,7 +39,10 @@ const AppsRoutes = () => {
                         <RegisterProfile />
                     </PrivateRoutes>
                 } 
-            />
+                />
+            
+            {/* <Route path='/register-profile' element={<RegisterProfile />}/> */}
+
 
             {/* Rutas para el administrador */}
             <Route path="/admin" 
