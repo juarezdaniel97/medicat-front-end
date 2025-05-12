@@ -32,7 +32,7 @@ const FormPatient = () => {
                 city: data.city,
                 zipCode: data.zipCode
             },
-            profileType: "patient"
+            profileType: data.profileType
         };
 
         const response = await createPatient(userData);
@@ -204,6 +204,8 @@ const FormPatient = () => {
                         {...register("zipCode")}/>
                 </div>
             </div>
+            
+            <input type="hidden" {...register("profileType")} value="patient" />
 
             <div className='flex items-center justify-center space-x-4'>
 

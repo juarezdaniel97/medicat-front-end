@@ -137,6 +137,7 @@ export const useMedico = () =>{
     return {
         loading,
         error,
+        setError,
         medicos,
         setMedicos,
         ListMedicos,
