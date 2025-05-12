@@ -63,7 +63,7 @@ const FormLogin = () => {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-150 ease-in-out"
+                className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700"
             >
                 {loading ? (
                     <span className="flex items-center justify-center">

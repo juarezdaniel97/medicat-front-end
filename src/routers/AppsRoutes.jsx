@@ -24,24 +24,25 @@ const AppsRoutes = () => {
             <Route path="/" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
 
-            <Route path="/selector-profile" 
+            {/* <Route path="/selector-profile" 
                 element={
                     <PrivateRoutes>
                         <SelectorProfile />
                     </PrivateRoutes>
                 } 
-            />
+            /> */}
             
-
-            <Route path="/register-profile" 
+            <Route path='/selector-profile' element={<SelectorProfile />}/>
+            
+            {/* <Route path="/register-profile" 
                 element={
                     <PrivateRoutes>
                         <RegisterProfile />
                     </PrivateRoutes>
                 } 
-                />
+                /> */}
             
-            {/* <Route path='/register-profile' element={<RegisterProfile />}/> */}
+            <Route path='/register-profile' element={<RegisterProfile />}/>
 
 
             {/* Rutas para el administrador */}
