@@ -2,6 +2,7 @@
 import { Loader2, Search } from 'lucide-react';
 import { useMedicoContext } from '../../contexts/MedicoContext'
 import CardMedico from '../../components/ui/CardMedico';
+import { useFavoriteContext } from '../../contexts/FavoriteContext';
 
 const ListMedicos = () => {
     const { medicos, loading } = useMedicoContext();
@@ -48,8 +49,8 @@ const ListMedicos = () => {
                         {/* Lista de Médicos */}
                         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                             {
-                                medicos.map((medico)=>(
-                                    <CardMedico key={medico._id} medico={medico}/>
+                                medicos.map((medico, index)=>(
+                                    <CardMedico key={index} medico={medico}/>
                                 ))
                             }
                         </div>

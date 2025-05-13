@@ -1,13 +1,11 @@
-import { ChevronRight, Heart, Mail, User } from "lucide-react"
+import { ChevronRight, Mail, Trash2, User } from "lucide-react"
 import { useFavoriteContext } from "../../contexts/FavoriteContext";
 
-const CardMedico = ({medico}) => {
-
-    const { addFavorite } = useFavoriteContext();
+const CardFavorite = ({medico}) => {
+    const { removeFavorite } = useFavoriteContext(); 
 
     const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
-    console.log('medico ->', medico);
-    
+
     return (
         <div className="border rounded-lg p-4 border-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50">
             <div className="flex items-start">
@@ -31,20 +29,13 @@ const CardMedico = ({medico}) => {
                 </ul>
 
                 <button 
-                    onClick={() => addFavorite(medico)}
+                    onClick={()=> removeFavorite(medico._id)}
                     className="cursor-pointer">
-                    <Heart/>
+                    <Trash2 className="text-red-500 dark:text-red-700"/>
                 </button>
-
-                <button className="flex items-center cursor-pointer bg-emerald-600 text-white py-2 px-3 rounded-md hover:bg-emerald-700">
-                    Agendar Cita
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                </button>
-
-                
             </div>
         </div>
     )
 }
 
-export default CardMedico
+export default CardFavorite

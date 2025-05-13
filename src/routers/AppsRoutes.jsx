@@ -16,6 +16,7 @@ import Register from '../pages/auth/Register'
 import AgendaMedico from '../pages/medico/AgendaMedico'
 import ListPatient from '../pages/patient/ListPatient'
 import PerfilMedico from '../pages/medico/PerfilMedico'
+import Favorite from '../pages/patient/Favorite'
 
 const AppsRoutes = () => {
 
@@ -66,7 +67,8 @@ const AppsRoutes = () => {
                 {/* Redirige automaticamente al cargar la página */}
                 <Route index element={<Navigate to="agenda" replace />} /> 
                 <Route path='agenda' element={<Agenda/>} />
-                <Route path='historial' element={<Historial/>} />
+                <Route path='favorito' element={<Favorite/>} />
+                {/* <Route path='historial' element={<Historial/>} /> */}
                 <Route path='medicos' element={<ListMedicos/>} />
                 <Route path='perfil' element={<Perfil/>} />
                 <Route path='create' element={<h1>Create Profile</h1>} />

@@ -5,12 +5,12 @@ const Agenda = () => {
     const { loading, error, agenda } = usePatientContext();
     
     return (
-        <div className='bg-white dark:bg-gray-800 rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow-md p-6'>
+        <div className='bg-white dark:bg-gray-700 rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow-md p-6'>
             
             {loading && <p>Cargando...</p>}
             
             {/* Filtros por fecha */}
-            <div className='mb-6 flex flex-wrap gap-2 items-center bg-gray-50 dark:bg-gray-700/50 p-4 rounded-md'>
+            <div className='mb-6 flex flex-wrap gap-2 items-center p-4 rounded-md'>
                 <span className="text-sm text-gray-600 dark:text-gray-300">Filtrar por:</span>
                 <button className="px-3 py-1 text-sm cursor-pointer bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 rounded-full">
                     Próximas
@@ -35,7 +35,7 @@ const Agenda = () => {
                                 (
                                     agenda.map((cita)=>(
                                         <div key={cita._id}
-                                            className='p-4 border rounded-lg flex flex-col sm:flex-row sm:items-center justify-between border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                                            className='p-4 border rounded-lg flex flex-col sm:flex-row sm:items-center justify-between border-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                                         >
                                             <div className='flex flex-col sm:flex-row sm:items-center mb-3 sm:mb-0'>
                                                 <div className='flex items-center mb-2 sm:mb-0 sm:mr-4'>

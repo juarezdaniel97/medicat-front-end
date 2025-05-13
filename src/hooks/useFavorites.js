@@ -12,10 +12,13 @@ export const useFavorites = () => {
     }, [favorites])
     
     const addFavorite = (data) => {
-        const isAlReadyFavorite = favorites.some((fav)=> fav.id === data.id);
+        const isAlReadyFavorite = favorites.some((fav)=> fav._id === data._id);
 
         if (isAlReadyFavorite) {
-            toast.info("Ya está en favorito");
+            // toast.error("Ya está en favoritos")
+            toast('Ya se encuentra en favoritos!', {
+            icon: '⚠️',
+            });
             return;
         }
 
@@ -25,7 +28,7 @@ export const useFavorites = () => {
     }
 
     const removeFavorite = (id) => {
-        const updateList = favorites.filter((fav) => fav.id !== id );
+        const updateList = favorites.filter((fav) => fav._id !== id );
         setFavorites(updateList);
         toast.error("Eliminado de favorito")
     }
