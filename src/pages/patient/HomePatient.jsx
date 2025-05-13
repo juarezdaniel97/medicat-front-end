@@ -3,13 +3,16 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext';
 import { usePatientContext } from '../../contexts/PatientContext';
 import { useMedicoContext } from '../../contexts/MedicoContext';
+import Header from '../../components/layout/Header';
+import Footer from '../../components/layout/Footer';
+import { Calendar, FileText, Heart, User, UserCircle2Icon } from 'lucide-react';
 
 
 
 
 const HomePatient = () => {
     
-    const { logout } = useAuthContext();
+    const { logout, user } = useAuthContext();
     
     const { getAppointment, getPatient, setAgenda, setDataPatient } = usePatientContext();
     const { ListMedicos, setMedicos } = useMedicoContext();
@@ -49,62 +52,73 @@ const HomePatient = () => {
     return (
         <>
             {/* Header */}
-            <div className='flex justify-between items-center bg-gray-200 p-4'>
-                    <h1 className='text-2xl font-bold'>Bienvenido - Home Patient</h1>
-                    <button
-                        onClick={() => handleLogout()}
-                        type='button' 
-                        className='bg-red-500 text-white rounded p-2 m-2 cursor-pointer'>
-                            Cerrar Sesión
-                    </button>
-            </div>
+            <Header showLogout={true} onLogout={handleLogout} userEmail={user?.email} />
+            
             
             {/* Navigation */}
-            <div>
-                <nav>
-                    <button
-                        className={`p-2 m-2 ${activeTab === "agenda" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                        onClick={() => {
-                            setActiveTab("agenda");
-                            navigate("/patient/agenda");
-                        }}
-                        >
-                        Agendas
-                    </button>
+            <div className='min-h-screen bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white'>
+                <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
+                    <div className='mb-6 border-b border-gray-200 dark:border-gray-700'>
+                        
+                        <nav className='flex space-x-8'>
 
-                    <button
-                        className={`p-2 m-2 ${activeTab === "medicos" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                        onClick={() => {
-                            setActiveTab("medicos");
-                            navigate("/patient/medicos");
-                        }}
-                        >
-                        Medicos
-                    </button>
-                    
-                    <button
-                        className={`p-2 m-2 ${activeTab === "historial" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                        onClick={() => {
-                            setActiveTab("historial");
-                            navigate("/patient/historial");
-                        }}
-                        >
-                        Historial
-                    </button>
+                            {/* Button Agenda */}
+                            <button
+                                className={`py-4 px-1 flex items-center border-b-2 font-medium text-sm cursor-pointer ${ activeTab === 'agenda' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600' }`}
+                                onClick={() => {
+                                    setActiveTab("agenda");
+                                    navigate("/patient/agenda");
+                                }}
+                            >
+                                <Calendar className="mr-2 h-5 w-5" />
+                                Agendas
+                            </button>
 
-                    <button
-                        className={`p-2 m-2 ${activeTab === "perfil" ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                        onClick={() => {
-                            setActiveTab("perfil");
-                            navigate("/patient/perfil");
-                        }}
-                        >
-                        Perfil
-                    </button>
-                </nav>
+                            {/* Button Medico */}
+                            <button
+                                className={`py-4 px-1 flex items-center border-b-2 font-medium text-sm cursor-pointer ${ activeTab === 'medicos'  ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400'  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600' }`}
+                                onClick={() => {
+                                    setActiveTab("medicos");
+                                    navigate("/patient/medicos");
+                                }}
+                                >
+                                <User className="mr-2 h-5 w-5" />
+                                Medicos
+                            </button>
+
+                            {/* Favoritos */}
+                            <button
+                                className={`py-4 px-1 flex items-center border-b-2 font-medium text-sm cursor-pointer ${ activeTab === 'favoritos' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600' }`}
+                                onClick={() => {
+                                    setActiveTab("favoritos");
+                                    navigate("/patient/historial"); //Modificar
+                                }}
+                                >
+                                <Heart className='mr-2 h-5 w-5'/>
+                                Favoritos
+                            </button>
+
+                            {/* Perfil */}
+                            <button
+                                className={`py-4 px-1 flex items-center border-b-2 font-medium text-sm cursor-pointer ${ activeTab == 'perfil' ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400': 'border-transparent text-gray-500 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600' }`}
+                                onClick={() => {
+                                    setActiveTab("perfil");
+                                    navigate("/patient/perfil");
+                                }}
+                                >
+                                <UserCircle2Icon className='mr-2 h-5 w-5'/>
+                                Perfil
+                            </button>
+                        </nav>
+                    </div>
+                </main>
+                
+                <Outlet/>
             </div>
 
-            <Outlet/>
+            
+
+            <Footer/>
         </>
     )
 }
