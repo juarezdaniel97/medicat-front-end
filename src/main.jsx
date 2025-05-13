@@ -7,6 +7,7 @@ import { AuthContextProvider } from './contexts/AuthContext.jsx'
 import { MedicoContextProvider } from './contexts/MedicoContext.jsx'
 import { PatientContextProvider } from './contexts/PatientContext.jsx'
 import { ThemeContextProvider } from './contexts/ThemeContext.jsx'
+import { FavoriteContextProvider } from './contexts/FavoriteContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')).render(
         <AuthContextProvider>
           <MedicoContextProvider>
             <PatientContextProvider>
-              <App />
+              <FavoriteContextProvider>
+                <App />
+              </FavoriteContextProvider>
             </PatientContextProvider>
           </MedicoContextProvider>
       </AuthContextProvider>
