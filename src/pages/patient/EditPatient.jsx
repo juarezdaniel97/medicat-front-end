@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { usePatientContext } from '../../contexts/PatientContext';
 
 const EditPatient = () => {
-    const navigate = useNavigate();
-    const { getPatient, editPatient, loading, error, dataPatient, setDataPatient } = usePatientContext();
+    
+    const { getPatient, loading, error, dataPatient, setDataPatient } = usePatientContext();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -28,10 +28,6 @@ const EditPatient = () => {
         
         loadPatientData();
         
-        // Limpieza al desmontar el componente
-        return () => {
-            // Si tienes una función para limpiar mensajes de error/éxito, llámala aquí
-        };
     }, []);
 
     if (isLoading || loading) {

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const FormPatient = ({ initialValues, isEditing = false }) => {
     
-    const { createPatient, editPatient, loading, error, success: messageSuccess, clearMessages } = usePatientContext();
+    const { createPatient, editPatient, loading, error, success: messageSuccess, clearMessages,setDataPatient } = usePatientContext();
     
     const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm();
     
@@ -28,8 +28,6 @@ const FormPatient = ({ initialValues, isEditing = false }) => {
     // Actualizar formulario cuando cambian los valores iniciales
     useEffect(() => {
         if (isEditing && initialValues && Object.keys(initialValues).length > 0) {
-            console.log('Initial values para reset:', initialValues);
-            console.log('Initialvalues.profileUser :', initialValues.profileUser);
             reset({
             firstName: initialValues.profileUser?.firstName || '',
             lastName: initialValues.profileUser?.lastName || '',
@@ -64,6 +62,9 @@ const FormPatient = ({ initialValues, isEditing = false }) => {
         
         if (isEditing) {
             response = await editPatient(userData);
+            if (response) {
+                setDataPatient(response)
+            }
             navigate('/patient/perfil');
         } else {
             response = await createPatient(userData);
