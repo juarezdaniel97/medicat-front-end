@@ -1,12 +1,13 @@
 import { ChevronRight, Heart, Mail, User } from "lucide-react"
 import { useFavoriteContext } from "../../contexts/FavoriteContext";
+import { useNavigate } from "react-router-dom";
 
 const CardMedico = ({medico}) => {
 
     const { addFavorite } = useFavoriteContext();
+    const navigate = useNavigate(); 
 
-    const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
-    console.log('medico ->', medico);
+    const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     
     return (
         <div className="border rounded-lg p-4 border-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50">
@@ -36,7 +37,9 @@ const CardMedico = ({medico}) => {
                     <Heart/>
                 </button>
 
-                <button className="flex items-center cursor-pointer bg-emerald-600 text-white py-2 px-3 rounded-md hover:bg-emerald-700">
+                <button
+                    onClick={() => navigate(`/turno/create/${medico._id}`)}
+                    className="flex items-center cursor-pointer bg-emerald-600 text-white py-2 px-3 rounded-md hover:bg-emerald-700">
                     Agendar Cita
                     <ChevronRight className="ml-1 h-4 w-4" />
                 </button>

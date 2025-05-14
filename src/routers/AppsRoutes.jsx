@@ -19,6 +19,7 @@ import PerfilMedico from '../pages/medico/PerfilMedico'
 import Favorite from '../pages/patient/Favorite'
 import FormPatient from '../components/forms/FormPatient'
 import EditPatient from '../pages/patient/EditPatient'
+import Turno from '../pages/Turno'
 
 const AppsRoutes = () => {
 
@@ -70,15 +71,15 @@ const AppsRoutes = () => {
                 <Route index element={<Navigate to="agenda" replace />} /> 
                 <Route path='agenda' element={<Agenda/>} />
                 <Route path='favorito' element={<Favorite/>} />
-                {/* <Route path='historial' element={<Historial/>} /> */}
                 <Route path='medicos' element={<ListMedicos/>} />
                 <Route path='perfil' element={<Perfil/>} />
-                <Route path='create' element={<h1>Create Profile</h1>} />
-                {/* <Route path='list/' element={<>List Profile</>} /> */}
                 <Route path='perfil/update/:id' element={<EditPatient/>} />
-                <Route path='delete/:id' element={<>Delete Profile</>} />
+                {/* <Route path='historial' element={<Historial/>} /> */}
+                {/* <Route path='create' element={<h1>Create Profile</h1>} /> */}
+                {/* <Route path='list/' element={<>List Profile</>} /> */}
             
             </Route>
+
 
             {/* Rutas para los medicos */}
             <Route path="/medico"
@@ -92,7 +93,12 @@ const AppsRoutes = () => {
                 <Route path='pacientes' element={<ListPatient/>} />
                 <Route path='perfil' element={<PerfilMedico/>} />
             </Route>
-
+            
+            {/* Turnos */}
+            <Route path='/turno' > 
+                <Route path='create/:id' element={<Turno/>}/>
+            </Route>
+            
             <Route path='*' element={<h1>Page Not Found</h1>} />
         </Routes>
     )
