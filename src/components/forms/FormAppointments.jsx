@@ -1,15 +1,45 @@
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { createAppointmentsApi } from "../../services/appointments";
-import { useState } from "react";
+import api_appointments, { createAppointmentsApi, getAppointmentsApi, updateAppointmentsApi } from "../../services/appointments";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
-const FormAppointments = ({id_medico, id_patient}) => {
-    const { register, handleSubmit, formState: {errors} } = useForm()
+const FormAppointments = ({id_medico, id_patient, appointmentId, isMedico}) => {
+
+    const { register, handleSubmit, formState: {errors}, reset } = useForm()
+    
     const navigate = useNavigate();
 
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+
+    //Cargar los datos del turno si estamos editando
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        api_appointments.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+        if (appointmentId) {
+            const fetchAppointment = async () =>{
+                try {
+                    const response = await getAppointmentsApi(appointmentId);
+                    console.log('Turno: response.data.patientId ->', response.data.patientId);
+                    
+                    reset({
+                        medicoId: response?.data?.medicoId,
+                        patientId: response?.data?.patientId,
+                        appointmentDate: response?.data?.appointmentDate?.split('T')[0],
+                        reason: response?.data?.reason,
+                        status: response?.data?.status
+                    })
+                } catch (err) {
+                    setError(err.response?.data?.message || err.message || "Error al cargar el turno");
+                }
+            }
+            fetchAppointment()
+        }
+
+    }, [appointmentId, reset])
+    
 
     const onSubmit = async (data) => {
         setLoading(true)
@@ -17,19 +47,28 @@ const FormAppointments = ({id_medico, id_patient}) => {
 
         const dataAppointment = {
             medicoId: id_medico,
-            patientId: id_patient,
+            patientId: id_patient || data.patientId ,
             appointmentDate: data.appointmentDate,
             reason: data.reason,
-            status: 'programado'
+            status: data.status || 'programado'
         }
 
         try {
-            const response = await createAppointmentsApi(dataAppointment);
-            if (response) {
-                navigate(-1)
+            
+            if (appointmentId) {
+                //Actualizar existente
+                await updateAppointmentsApi(appointmentId, dataAppointment);
+            }else{
+                //Crear un nuevo turno
+                await createAppointmentsApi(dataAppointment);
             }
+            navigate(-1)
+
+            // const response = await createAppointmentsApi(dataAppointment);
+            // if (response) {
+            // }
         } catch (err) {
-            setError(err.response?.data?.message || err.message || "Error al crear el turno");
+            setError(err.response?.data?.message || err.message || "Error al guardar un turno");
         } finally {
             setLoading(false)
         }
@@ -79,6 +118,38 @@ const FormAppointments = ({id_medico, id_patient}) => {
                 )}
             </div>
 
+
+            {
+                isMedico && appointmentId && (
+                    <div className="mb-4">
+                        <label htmlFor="status" className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
+                            Estado del turno
+                        </label>
+                        <select
+                            id="status"
+                            className="w-full px-3 py-2 border rounded-md bg-white text-gray-900 dark:bg-gray-600 dark:text-white"
+                            {...register("status")}
+                        >
+                            <option value="programado">Programado</option>
+                            <option value="confirmado">Confirmado</option>
+                            <option value="completado">Completado</option>
+                            <option value="cancelado">Cancelado</option>
+                        </select>
+
+                        <input type="hidden" {...register("medicoId")}  />
+                        <input type="hidden" {...register("patientId")} />
+                    </div>
+                    
+                )
+            }
+
+            
+            <button 
+                onClick={() =>{ navigate(-1) } }
+                className="mb-4 w-full bg-neutral-600 hover:bg-neutral-700 text-white  dark:bg-neutral-600 dark:hover:bg-neutral-700 py-2 px-4 cursor-pointer rounded-md">
+                Volver
+            </button>
+
             <button
                 type="submit"
                 disabled={loading}
@@ -87,10 +158,10 @@ const FormAppointments = ({id_medico, id_patient}) => {
                 {loading ? (
                     <span className="flex items-center justify-center">
                         <Loader2 className="animate-spin mr-2" />
-                        Registrando...
+                        {appointmentId ? 'Actualizando...' : 'Registrando...'}
                     </span>
                 ) : (
-                    'Registrar'
+                    appointmentId ? 'Actualizar turno' : 'Registrar turno'
                 )}
             </button>
         </form>

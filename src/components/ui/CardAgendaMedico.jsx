@@ -1,11 +1,16 @@
 import { Calendar, Clock, Edit } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useMedicoContext } from "../../contexts/MedicoContext";
 
 const CardAgendaMedico = ({cita}) => {
 
     const navigate = useNavigate();
-    console.log('cita', cita);
     
+    const {dataMedico} = useMedicoContext();
+
+    console.log('dataMedico ->', dataMedico);
+    
+
     return (
         <div 
             key={cita._id} 
@@ -37,7 +42,7 @@ const CardAgendaMedico = ({cita}) => {
                         {cita.estado === 'completado' ? 'Completado' : 'Programado'}
                 </span>
                 <button 
-                    onClick={() => navigate(`/turno/update/${cita.turnoId}`)}
+                    onClick={() => navigate(`/turno/update/${dataMedico._id}/${cita.turnoId}`)}
                     className="text-emerald-600 cursor-pointer dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 text-sm font-medium">
                     <Edit/>
                 </button>

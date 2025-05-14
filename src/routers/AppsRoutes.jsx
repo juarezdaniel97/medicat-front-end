@@ -97,7 +97,8 @@ const AppsRoutes = () => {
             {/* Turnos */}
             <Route path='/turno' > 
                 <Route path='create/:id' element={<Turno/>}/>
-                <Route path='update/:id' element={<Turno/>}/>
+                {/* <Route path='update/:id' element={<Turno/>}/> */}
+                <Route path="update/:id/:appointmentId?" element={<Turno />} />
             </Route>
             
             <Route path='*' element={<h1>Page Not Found</h1>} />
