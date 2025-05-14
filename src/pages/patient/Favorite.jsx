@@ -1,11 +1,10 @@
 import { Search } from "lucide-react";
 import { useFavoriteContext } from "../../contexts/FavoriteContext"
-import CardMedico from "../../components/ui/CardMedico";
 import CardFavorite from "../../components/ui/CardFavorite";
 
 const Favorite = () => {
 
-    const {favorites, removeFavorite} = useFavoriteContext(); 
+    const {favorites} = useFavoriteContext(); 
     console.log('favorites ->', favorites);
     
     return (
@@ -26,9 +25,13 @@ const Favorite = () => {
                 {/* Lista de Médicos */}
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                     {
-                        favorites.map((medico)=>(
-                            <CardFavorite key={medico._id} medico={medico}/>
-                        ))
+                        favorites.length > 0 ? (
+                            favorites.map((medico) => <CardFavorite medico={medico} key={medico._id} />)
+                        ) : (
+                            <div className="col-span-full flex flex-col items-center justify-center h-full w-full py-16">
+                                <span className="text-gray-500 dark:text-gray-300 text-lg">No hay médicos en favoritos</span>
+                            </div>
+                        )
                     }
                 </div>
             </div>

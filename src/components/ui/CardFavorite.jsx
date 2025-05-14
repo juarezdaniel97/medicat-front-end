@@ -6,6 +6,7 @@ const CardFavorite = ({medico}) => {
 
     const dias =  ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
+
     return (
         <div className="border rounded-lg p-4 border-gray-200 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50">
             <div className="flex items-start">

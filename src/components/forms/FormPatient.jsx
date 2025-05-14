@@ -1,24 +1,49 @@
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import { usePatientContext } from '../../contexts/PatientContext';
-import { useNavigate } from 'react-router-dom';
+import { replace, useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-const FormPatient = () => {
-
-    const { createPatient, loading, error, success: messageSuccess } = usePatientContext();
-    const {register, handleSubmit, formState: {errors} } = useForm();
-
+const FormPatient = ({ initialValues, isEditing = false }) => {
+    
+    const { createPatient, editPatient, loading, error, success: messageSuccess, clearMessages } = usePatientContext();
+    
+    const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm();
+    
     const navigate = useNavigate();
 
+    useEffect(() => {
+        return () => {
+            if (clearMessages) clearMessages();
+        };
+    }, [clearMessages]);
 
     useEffect(() => {
-        if(messageSuccess){
-            toast.success(messageSuccess)
+        if (messageSuccess) {
+            toast.success(messageSuccess);
         }
-    }, [messageSuccess])
-    
+    }, [messageSuccess]);
+
+    // Actualizar formulario cuando cambian los valores iniciales
+    useEffect(() => {
+        if (isEditing && initialValues && Object.keys(initialValues).length > 0) {
+            console.log('Initial values para reset:', initialValues);
+            console.log('Initialvalues.profileUser :', initialValues.profileUser);
+            reset({
+            firstName: initialValues.profileUser?.firstName || '',
+            lastName: initialValues.profileUser?.lastName || '',
+            phoneNumber: initialValues.profileUser?.phoneNumber || '',
+            dateOfBirth: initialValues.profileUser?.dateOfBirth ? initialValues.profileUser.dateOfBirth.split('T')[0] : '',
+            gender: initialValues.profileUser?.gender || '',
+            street: initialValues.profileUser?.address?.street || '',
+            city: initialValues.profileUser?.address?.city || '',
+            zipCode: initialValues.profileUser?.address?.zipCode || '',
+            profileType: initialValues.profileUser?.profileType || 'patient'
+        });
+        
+        }
+    }, [initialValues, isEditing, reset]);
 
     const onSubmit = async (data) => {
         const userData = {
@@ -35,26 +60,26 @@ const FormPatient = () => {
             profileType: data.profileType
         };
 
-        const response = await createPatient(userData);
-
-        if (response){
-            navigate('/patient');
+        let response;
+        
+        if (isEditing) {
+            response = await editPatient(userData);
+            navigate('/patient/perfil');
+        } else {
+            response = await createPatient(userData);
+            navigate('/patient')
         }
-        //navigate("/patient")
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-            {
-                error && 
-                (
-                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
-                        {error}
-                    </div>
-                )
-            }
-
-            <div className=' grid grid-cols-1 md:grid-cols-2 gap-4'>
+            {error && (
+                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+                    {error}
+                </div>
+            )}
+            
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <div className='space-y-2'>
                     <label 
                         htmlFor="firstName"
@@ -65,7 +90,7 @@ const FormPatient = () => {
                     <input 
                         id="firstName" 
                         type="text" 
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
                         {...register("firstName", { required: "El nombre es obligatorio" })} 
                     />
                     {errors.firstName && (
@@ -83,7 +108,7 @@ const FormPatient = () => {
                     <input 
                         id="lastName" 
                         type="text"
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
                         {...register("lastName", { required: "El apellido es obligatorio" })}
                     />
                     {errors.lastName && (
@@ -103,7 +128,7 @@ const FormPatient = () => {
                     <input 
                         id="phoneNumber"
                         type="text"
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
                         {...register("phoneNumber", { required: "El número de telefono es obligatorio" })} 
                     />
                     {errors.phoneNumber && (
@@ -121,15 +146,15 @@ const FormPatient = () => {
                     <input 
                         id="dateOfBirth" 
                         type="date"
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
-                        {...register("dateOfBirth", { required: "La fecha de naciemiento es obligatoria" })} 
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white'
+                        {...register("dateOfBirth", { required: "La fecha de nacimiento es obligatoria" })} 
                     />
                     {errors.dateOfBirth && (
                         <p className="mt-1 text-red-500 text-xs">{errors.dateOfBirth.message}</p>
                     )}
                 </div>
 
-                <div  className='space-y-2'>
+                <div className='space-y-2'>
                     <label 
                         htmlFor="gender"
                         className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
@@ -138,7 +163,7 @@ const FormPatient = () => {
                     </label>
                     <select
                         id="gender" 
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
                         {...register("gender", { required: "Debe seleccionar un género" })}>
                         <option value="">seleccione un género</option>
                         <option value="M">Masculino</option>
@@ -152,8 +177,7 @@ const FormPatient = () => {
             </div>
             
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                
-                <div  className='space-y-2'>
+                <div className='space-y-2'>
                     <label 
                         htmlFor="street"
                         className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
@@ -164,7 +188,7 @@ const FormPatient = () => {
                         id='street'
                         type="text"
                         placeholder='Calle principal 223' 
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white'  
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white'  
                         {...register("street", { required: "La calle y número es obligatorio" })} 
                     />
                     {errors.street && (
@@ -172,7 +196,7 @@ const FormPatient = () => {
                     )}
                 </div>
 
-                <div  className='space-y-2'>
+                <div className='space-y-2'>
                     <label 
                         htmlFor="city" 
                         className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
@@ -182,7 +206,7 @@ const FormPatient = () => {
                     <input 
                         id='city'
                         type="text" 
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
                         {...register("city", {required:"La ciudad es obligatorio"})}
                     />
                     {errors.city && (
@@ -190,7 +214,7 @@ const FormPatient = () => {
                     )}
                 </div>
 
-                <div  className='space-y-2'>
+                <div className='space-y-2'>
                     <label 
                         htmlFor="zipCode"
                         className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'
@@ -200,41 +224,32 @@ const FormPatient = () => {
                     <input 
                         id='zipCode'
                         type="text" 
-                        className='w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
+                        className='w-full border rounded-md px-3 py-2 bg-white text-gray-900 dark:bg-gray-600 dark:text-white' 
                         {...register("zipCode")}/>
                 </div>
             </div>
             
             <input type="hidden" {...register("profileType")} value="patient" />
+            
 
             <div className='flex items-center justify-center space-x-4'>
-
-                    <button 
-                        type='submit'
-                        disabled={loading}
-                        className='bg-amber-300 text-black py-2 px-6 rounded-md hover:bg-amber-400 cursor-pointer'
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        type='submit'
-                        disabled={loading}
-                        className='bg-emerald-600 text-white py-2 px-6 rounded-md hover:bg-emerald-700 cursor-pointer'
-                    >
-                        {
-                            loading ? 
-                            (
-                                <span className='flex items-center justify-center'>
-                                    <Loader2 className='animate-spin mr-2'/>
-                                    Registrando...
-                                </span>
-                            ): ("Crear Perfil")
-                        }
-                    </button>
+                <button
+                    type='submit'
+                    disabled={loading}
+                    className='bg-emerald-600 text-white py-2 px-6 rounded-md hover:bg-emerald-700 cursor-pointer'
+                >
+                    {loading ? (
+                        <span className='flex items-center justify-center'>
+                            <Loader2 className='animate-spin mr-2'/>
+                            {isEditing ? 'Actualizando...' : 'Registrando...'}
+                        </span>
+                    ) : (
+                        isEditing ? 'Actualizar Perfil' : 'Crear Perfil'
+                    )}
+                </button>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default FormPatient
+export default FormPatient;

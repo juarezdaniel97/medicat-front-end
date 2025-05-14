@@ -17,6 +17,8 @@ import AgendaMedico from '../pages/medico/AgendaMedico'
 import ListPatient from '../pages/patient/ListPatient'
 import PerfilMedico from '../pages/medico/PerfilMedico'
 import Favorite from '../pages/patient/Favorite'
+import FormPatient from '../components/forms/FormPatient'
+import EditPatient from '../pages/patient/EditPatient'
 
 const AppsRoutes = () => {
 
@@ -72,8 +74,8 @@ const AppsRoutes = () => {
                 <Route path='medicos' element={<ListMedicos/>} />
                 <Route path='perfil' element={<Perfil/>} />
                 <Route path='create' element={<h1>Create Profile</h1>} />
-                <Route path='list/' element={<>List Profile</>} />
-                <Route path='update/:id' element={<>Update Profile</>} />
+                {/* <Route path='list/' element={<>List Profile</>} /> */}
+                <Route path='perfil/update/:id' element={<EditPatient/>} />
                 <Route path='delete/:id' element={<>Delete Profile</>} />
             
             </Route>

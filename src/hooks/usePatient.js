@@ -1,4 +1,4 @@
-import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi, listPatientApi } from "../services/patient";
+import api_patient, { createPatientApi, getPatientApi, getPatientTurnoApi, listPatientApi, updatePatientApi } from "../services/patient";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
@@ -101,6 +101,26 @@ export const usePatient = () => {
         }
     }
 
+    const editPatient = async (data) => {
+        
+        try {
+            const token = localStorage.getItem('token');
+            const decoded = jwtDecode(token);
+            const id = decoded.id;
+
+            api_patient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+            const response = await updatePatientApi(id, data);
+
+            return response.data
+
+        } catch (error) {
+            console.error("Error al obtener paciente", error);
+            setError(error.response.data.message || "Error al obtener paciente");
+            return false;
+        }
+    }
+
     return {
         getAppointment,
         getPatient,
@@ -114,6 +134,7 @@ export const usePatient = () => {
         success,
         ListPatient,
         pacientes,
-        setPacientes
+        setPacientes,
+        editPatient
     };
 }

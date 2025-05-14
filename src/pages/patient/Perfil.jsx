@@ -9,6 +9,7 @@ const Perfil = () => {
     const { dataPatient } = usePatientContext();
 
     const navigate = useNavigate();
+    console.log(dataPatient);
     
 
     return (
@@ -26,7 +27,7 @@ const Perfil = () => {
                         </div>
                     </div>
                     <button
-                         // onClick={() => navigate(`update/${userData?._id}`)} 
+                        onClick={() => navigate(`update/${dataPatient?._id}`)} 
                         className="flex items-center justify-center w-full sm:w-auto px-4 py-2 cursor-pointer bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition duration-200 shadow-md">
                         <Edit className="mr-2 h-4 w-4" />
                         Editar Perfil
