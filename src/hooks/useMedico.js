@@ -6,7 +6,7 @@ import { getUser, updateUser } from "../services/auth";
 
 
 export const useMedico = () =>{
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [medicos, setMedicos] = useState(null);
     const [dataMedico, setDataMedico] = useState(null);
