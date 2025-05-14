@@ -14,10 +14,18 @@ const PrivateRoutes = ({ children, allowedRole}) => {
         return <Navigate to="/" />;
     }
 
-    if (allowedRole && !allowedRole.includes(user.role)) {
-        if (user.role === "admin") return <Navigate to="/admin" />;
-        if (user.role === "paciente") return <Navigate to="/patient" />;
-        if (user.role === "medico") return <Navigate to="/medico" />;
+    if (allowedRole && !allowedRole.includes(user.role.name)) {
+        console.log('user.role ->',user.role);
+        
+        if (user.role.name === "admin"){
+                return <Navigate to="/admin" />;
+            }
+        if (user.role.name === "paciente"){
+                return <Navigate to="/patient" />
+        }
+        if (user.role.name === "medico") {
+            return <Navigate to="/medico" />
+        }
     }
     return children;
 }

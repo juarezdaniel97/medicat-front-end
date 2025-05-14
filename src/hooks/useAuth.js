@@ -13,52 +13,6 @@ export const useAuth = () =>{
     const [success, setSuccess] = useState("");
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // useEffect(() => {
-    //     const checkAuth = ( )=>{
-
-    //         try {
-    //             const token = localStorage.getItem("token");
-
-    //             if(token){
-    //                 const decoded = jwtDecode(token);
-    //                 const currentTime = Date.now() / 1000; 
-
-    //                 if(decoded.exp < currentTime){
-    //                     logout();
-    //                     setError("Token expirado, por favor inicie sesión nuevamente");
-    //                 }else{
-    //                     setUser(decoded);
-    //                     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    //                     setIsAuthenticated(true);
-    //                 }
-    //             }
-    //         } catch (err) {
-    //             console.error('Error al verificar autenticación ', err);
-    //             logout();
-    //         }finally{
-    //             setLoading(false);
-    //         }
-    //     }
-
-    //     checkAuth();
-    // }, [])
-    
-
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     if (token) {
-    //         try {
-    //             const decoded = jwtDecode(token);
-    //             setUser(decoded);
-    //             setIsAuthenticated(true);
-    //         } catch (err) {
-    //             setUser(null);
-    //             setIsAuthenticated(false);
-    //             localStorage.removeItem("token")
-    //         }
-    //     }
-    
-    // }, [])
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -89,10 +43,11 @@ export const useAuth = () =>{
             
             localStorage.setItem("token", token);
 
-            setUser(userResponse);
+            //setUser(userResponse);
+            const decoded = jwtDecode(token);
+            setUser(decoded)
             setSuccess("Login exitoso");
             setIsAuthenticated(true);
-            
             
             return true;
 
