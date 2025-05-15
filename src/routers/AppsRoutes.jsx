@@ -1,4 +1,3 @@
-import { Home } from 'lucide-react'
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import HomePatient from '../pages/patient/HomePatient'
@@ -21,6 +20,9 @@ import FormPatient from '../components/forms/FormPatient'
 import EditPatient from '../pages/patient/EditPatient'
 import Turno from '../pages/Turno'
 import EditMedico from '../pages/medico/EditMedico'
+import Home from '../pages/admin/Home'
+
+
 
 const AppsRoutes = () => {
 
@@ -37,8 +39,6 @@ const AppsRoutes = () => {
                 } 
             />
             
-            {/* <Route path='/selector-profile' element={<SelectorProfile />}/> */}
-            
             <Route path="/register-profile" 
                 element={
                     <PrivateRoutes>
@@ -46,8 +46,6 @@ const AppsRoutes = () => {
                     </PrivateRoutes>
                 } 
                 />
-            
-            {/* <Route path='/register-profile' element={<RegisterProfile />}/> */}
 
 
             {/* Rutas para el administrador */}
@@ -57,7 +55,12 @@ const AppsRoutes = () => {
                         <HomeAdmin/>
                     </PrivateRoutes>
                     } > 
-            
+                <Route index element={<Navigate to="home" replace />} />
+                <Route path='home' element={<Home/>} />
+                <Route path='pacientes' element={<Home/>} />
+                <Route path='medicos' element={<Home/>} />
+                <Route path='usuarios' element={<Home/>} />
+                <Route path='perfil' element={<Home/>} />
             </Route>
 
             {/* Rutas para los pacientes */}
@@ -74,11 +77,7 @@ const AppsRoutes = () => {
                 <Route path='favorito' element={<Favorite/>} />
                 <Route path='medicos' element={<ListMedicos/>} />
                 <Route path='perfil' element={<Perfil/>} />
-                <Route path='perfil/update/:id' element={<EditPatient/>} />
-                {/* <Route path='historial' element={<Historial/>} /> */}
-                {/* <Route path='create' element={<h1>Create Profile</h1>} /> */}
-                {/* <Route path='list/' element={<>List Profile</>} /> */}
-            
+                <Route path='perfil/update/:id' element={<EditPatient/>} />            
             </Route>
 
 
@@ -99,7 +98,6 @@ const AppsRoutes = () => {
             {/* Turnos */}
             <Route path='/turno' > 
                 <Route path='create/:id' element={<Turno/>}/>
-                {/* <Route path='update/:id' element={<Turno/>}/> */}
                 <Route path="update/:id/:appointmentId?" element={<Turno />} />
             </Route>
             
