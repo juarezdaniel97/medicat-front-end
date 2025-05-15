@@ -16,12 +16,11 @@ import AgendaMedico from '../pages/medico/AgendaMedico'
 import ListPatient from '../pages/patient/ListPatient'
 import PerfilMedico from '../pages/medico/PerfilMedico'
 import Favorite from '../pages/patient/Favorite'
-import FormPatient from '../components/forms/FormPatient'
 import EditPatient from '../pages/patient/EditPatient'
 import Turno from '../pages/Turno'
 import EditMedico from '../pages/medico/EditMedico'
 import Home from '../pages/admin/Home'
-
+import PerfilAdmin from '../pages/admin/PerfilAdmin'
 
 
 const AppsRoutes = () => {
@@ -57,10 +56,9 @@ const AppsRoutes = () => {
                     } > 
                 <Route index element={<Navigate to="home" replace />} />
                 <Route path='home' element={<Home/>} />
-                <Route path='pacientes' element={<Home/>} />
-                <Route path='medicos' element={<Home/>} />
-                <Route path='usuarios' element={<Home/>} />
-                <Route path='perfil' element={<Home/>} />
+                <Route path='pacientes' element={<ListPatient/>} />
+                <Route path='medicos' element={<ListMedicos/>} />
+                <Route path='perfil' element={<PerfilAdmin/>} />
             </Route>
 
             {/* Rutas para los pacientes */}

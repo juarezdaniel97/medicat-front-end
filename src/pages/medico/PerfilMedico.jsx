@@ -29,7 +29,6 @@ const PerfilMedico = () => {
             minimumFractionDigits: 0
         }).format(price);
     };
-    console.log('dataMedico (perfil) ->', dataMedico);
     
     return (
         <>

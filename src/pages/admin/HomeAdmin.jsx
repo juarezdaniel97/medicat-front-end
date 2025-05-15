@@ -4,9 +4,19 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Header from '../../components/layout/Header';
 import { Calendar, FileText, Home, Hospital, User, UserCheck, UserCircle2Icon } from 'lucide-react';
 import Footer from '../../components/layout/Footer';
+import { useMedicoContext } from '../../contexts/MedicoContext';
+import { usePatientContext } from '../../contexts/PatientContext';
+import api_admin, { getAdminApi } from '../../services/admin';
+import { jwtDecode } from 'jwt-decode';
+import { useAdminContext } from '../../contexts/AdminContext';
 
 const HomeAdmin = () => {
+
     const { user, logout } = useAuthContext();
+    const { ListPatient, setPacientes  } = usePatientContext();
+    const { ListMedicos, setMedicos} = useMedicoContext();
+    const {getAdmin, setDataAdmin} = useAdminContext(); 
+
     const navigate = useNavigate();
 
     const [activeTab, setActiveTab] = useState("home");
@@ -19,6 +29,22 @@ const HomeAdmin = () => {
 
     useEffect(() => {
         //funcion para cargar pacientes, medicos, usuarios,
+        const fetchDataAdmin = async () => {
+            
+            //obtener listado de pacientes
+            const pacientes = await ListPatient();
+            setPacientes(pacientes)
+
+            //obenemos listado de medicos
+            const medicos = await ListMedicos()
+            setMedicos(medicos)
+
+            //Obtener dato de perfil del admin
+            const response = await getAdmin();
+            setDataAdmin(response)
+
+        }
+        fetchDataAdmin()
     }, [])
     
     
@@ -67,18 +93,6 @@ const HomeAdmin = () => {
                             >
                                 <Hospital className="mr-2 h-5 w-5"/>
                                 Medicos
-                            </button>
-
-                            {/* Usuarios */}
-                            <button
-                                className={`py-4 px-1 flex items-center border-b-2 font-medium text-sm cursor-pointer ${ activeTab === 'usuarios'  ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400'  : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600' }`}
-                                onClick={() => {
-                                    setActiveTab("usuarios");
-                                    navigate("/admin/usuarios");
-                                }}
-                            >
-                                <UserCheck className="mr-2 h-5 w-5"/>
-                                Usuarios
                             </button>
 
                             {/* Perfil */}

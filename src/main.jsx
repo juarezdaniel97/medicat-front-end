@@ -8,19 +8,22 @@ import { MedicoContextProvider } from './contexts/MedicoContext.jsx'
 import { PatientContextProvider } from './contexts/PatientContext.jsx'
 import { ThemeContextProvider } from './contexts/ThemeContext.jsx'
 import { FavoriteContextProvider } from './contexts/FavoriteContext.jsx'
+import { AdminContextProvider } from './contexts/AdminContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeContextProvider>
         <AuthContextProvider>
-          <MedicoContextProvider>
-            <PatientContextProvider>
-              <FavoriteContextProvider>
-                <App />
-              </FavoriteContextProvider>
-            </PatientContextProvider>
-          </MedicoContextProvider>
+          <AdminContextProvider>
+            <MedicoContextProvider>
+              <PatientContextProvider>
+                <FavoriteContextProvider>
+                  <App />
+                </FavoriteContextProvider>
+              </PatientContextProvider>
+            </MedicoContextProvider>
+          </AdminContextProvider>
       </AuthContextProvider>
       </ThemeContextProvider>
     </BrowserRouter>
