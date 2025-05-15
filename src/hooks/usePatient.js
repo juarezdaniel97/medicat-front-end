@@ -115,8 +115,8 @@ export const usePatient = () => {
             return response.data
 
         } catch (error) {
-            console.error("Error al obtener paciente", error);
-            setError(error.response.data.message || "Error al obtener paciente");
+            console.error("Error al actualizar paciente", error);
+            setError(error.response.data.message || "Error al actualizar paciente");
             return false;
         }
     }

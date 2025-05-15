@@ -29,6 +29,7 @@ const PerfilMedico = () => {
             minimumFractionDigits: 0
         }).format(price);
     };
+    console.log('dataMedico (perfil) ->', dataMedico);
     
     return (
         <>
@@ -40,7 +41,7 @@ const PerfilMedico = () => {
                 <div className="col-span-1 bg-gray-50 dark:bg-gray-600 rounded-lg p-6">
                     <div className="flex flex-col items-center">
                         <div className="h-24 w-24 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-3xl font-medium mb-4">
-                            {dataMedico?.firstName.charAt(0)}
+                            {dataMedico?.firstName?.charAt(0)}
                         </div>
                         <h3 className="text-lg font-medium text-gray-900 dark:text-white">{dataMedico?.firstName} {dataMedico?.lastName}</h3>
                         <p className="text-sm text-emerald-600 dark:text-emerald-400">{dataMedico?.specialty}</p>

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import api_Medico, { createProfileApi, getMedicoApi, getMedicoTurnoApi, listMedicosApi } from "../services/medico"
+import api_Medico, { createProfileApi, getMedicoApi, getMedicoTurnoApi, listMedicosApi, updateMedicoApi } from "../services/medico"
 import { jwtDecode } from "jwt-decode";
 import { roleMap } from "../utils/roleMap";
 import { getUser, updateUser } from "../services/auth";
@@ -134,6 +134,31 @@ export const useMedico = () =>{
         }
     }
 
+    const editMedico = async (data) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const token = localStorage.getItem('token');
+            const decoded = jwtDecode(token);
+            const id = decoded.id;
+
+            api_Medico.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+            const response = await updateMedicoApi(id, data);
+
+            return response.data;
+
+        } catch (error) {
+            console.error("Error al actualizar medico", error);
+            setError(error.response.data.message || "Error al actualizar paciente");
+            return false;
+
+        }finally{
+            setLoading(false)
+        }
+    }
+
     return {
         loading,
         error,
@@ -149,6 +174,7 @@ export const useMedico = () =>{
         dataMedico,
         createMedico,
         success,
-        setSuccess
+        setSuccess,
+        editMedico
     }
 }

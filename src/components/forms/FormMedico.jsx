@@ -2,15 +2,15 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { useMedicoContext } from "../../contexts/MedicoContext"
 import { useNavigate } from "react-router-dom";
 import { Loader2, Plus, Trash2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 
-const FormMedico = () => {
+const FormMedico = ({initialValues, isEditing=false}) => {
 
-    const {createMedico, loading, error, setError ,success: messageSuccess } = useMedicoContext()
-    const { register, handleSubmit, control, formState: {errors} } = useForm();
-
+    const {createMedico, editMedico, setDataMedico, loading, error, setError ,success: messageSuccess } = useMedicoContext()
+    const { register, handleSubmit, control, formState: {errors}, reset } = useForm();
+    
     const navigate = useNavigate();
     
     const {fields, append, remove} = useFieldArray({
@@ -24,7 +24,23 @@ const FormMedico = () => {
         }
     }, [messageSuccess])
     
-
+    useEffect(() => {
+        if (isEditing && initialValues && Object.keys(initialValues).length > 0) {
+            console.log('initalValues ->', initialValues);
+            
+            reset({
+                firstName: initialValues?.profileUser?.firstName || '',
+                lastName: initialValues?.profileUser?.lastName || '',
+                specialty: initialValues?.profileUser?.specialty || '',
+                licenseNumber: initialValues?.profileUser?.licenseNumber || '',
+                consultationFee: initialValues?.profileUser?.consultationFee || '',
+                availability: initialValues?.profileUser?.availability?.length > 0 
+                ? initialValues.profileUser.availability : [] ,
+                profileType: initialValues?.profileUser?.profileType || 'medico'
+            })
+        }
+    }, [initialValues, isEditing, reset])
+    
     const onSubmit = async (data) => {
         
         setError(null);
@@ -33,9 +49,18 @@ const FormMedico = () => {
             setError("availability", { type: "manual", message: "Debe agregar al menos un horario de disponibilidad." });
         }
 
-        const response = await createMedico(data)
-        
-        if (response) {
+        let response;
+
+        if (isEditing) {
+            
+            response = await editMedico(data);
+            if (response) {
+                setDataMedico(response)
+            }
+            navigate('/medico/perfil');
+        }else{
+
+            response = await createMedico(data)
             navigate('/medico')
         }
     }
@@ -109,7 +134,7 @@ const FormMedico = () => {
                     <input
                         id="specialty"
                         type="text"
-                        placeholder="Cardiología"
+                        placeholder="Ej. Cardiología"
                         className="w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white"
                         {...register("specialty", { required: "La especialidad es obligatoria" })}
                     />
@@ -125,7 +150,7 @@ const FormMedico = () => {
                     <input
                         id="licenseNumber"
                         type="text"
-                        placeholder="123456-AB"
+                        placeholder="Ej. 123456-AB"
                         className="w-full border rounded-md px-3 py-2  bg-white text-gray-900 dark:bg-gray-600 dark:text-white"
                         {...register("licenseNumber", { required: "El número de matricula es obligatorio" })}
                     />
@@ -228,13 +253,11 @@ const FormMedico = () => {
             <div className='flex items-center justify-center space-x-4'>
 
                 <button 
-                    type='submit'
-                    disabled={loading}
-                    className='bg-amber-300 text-black py-2 px-6 rounded-md hover:bg-amber-400 cursor-pointer'
-                >
-                    Editar
+                    onClick={() =>{ navigate(-1) } }
+                    className="mb-4 mt-4 bg-neutral-600 hover:bg-neutral-700 text-white  dark:bg-neutral-600 dark:hover:bg-neutral-700 py-2 px-6 cursor-pointer rounded-md">
+                        Volver
                 </button>
-
+                
                 <button
                     type='submit'
                     disabled={loading}
@@ -245,9 +268,9 @@ const FormMedico = () => {
                         (
                             <span className='flex items-center justify-center'>
                                 <Loader2 className='animate-spin mr-2'/>
-                                Registrando...
+                                {isEditing ? 'Actualizando...' : 'Registrando...'}
                             </span>
-                        ): ("Crear Perfil")
+                        ): (isEditing ? 'Actualizar Perfil': 'Crear Perfil')
                     }
                 </button>
             </div>
