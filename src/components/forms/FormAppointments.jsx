@@ -66,8 +66,8 @@ const FormAppointments = ({id_medico, id_patient, appointmentId, isMedico}) => {
 
             if (id_patient) {
                 const updateAgenda = await getAppointment(id_patient);
-                setAgenda(updateAgenda)
-                // navigate('/patient/agenda')
+                setAgenda(updateAgenda);
+                navigate("/patient");
             }
             navigate(-1)
 

@@ -116,8 +116,7 @@ const HomePatient = () => {
                 <Outlet/>
             </div>
 
-            
-
+            {/* Footer */}
             <Footer/>
         </>
     )

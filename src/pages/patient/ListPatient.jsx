@@ -1,6 +1,7 @@
 import { usePatientContext } from "../../contexts/PatientContext"
 import SearchBar from "../../components/shared/SearchBar"
-import { Loader2 } from "lucide-react";
+import { Loader2, LucideSmartphone, MessageCircle, MessageCircleDashed, MessageCircleHeart, MessageCirclePlus, Smartphone, SmartphoneChargingIcon, SmartphoneIcon, SmartphoneNfc } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const calculateAge = (birthDate) => {
     if (!birthDate) return "-";
@@ -23,6 +24,8 @@ const calculateAge = (birthDate) => {
 const ListPatient = () => {
 
     const { pacientes, loading } = usePatientContext();
+
+    const navigate = useNavigate();
 
     return (
         <div className="bg-white dark:bg-gray-700 rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow-md"> 
@@ -59,6 +62,10 @@ const ListPatient = () => {
                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Email
                             </th>
+                            <th scope="col" 
+                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                SMS
+                            </th>
                         </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
@@ -94,6 +101,13 @@ const ListPatient = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-200">
                                             {paciente?.userId?.email || "-"}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-200">
+                                            <button 
+                                                onClick={()=>{navigate('/send-sms')}}
+                                                className="p-2 cursor-pointer">
+                                                    <SmartphoneIcon size={25}/>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))

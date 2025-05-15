@@ -21,6 +21,7 @@ import Turno from '../pages/Turno'
 import EditMedico from '../pages/medico/EditMedico'
 import Home from '../pages/admin/Home'
 import PerfilAdmin from '../pages/admin/PerfilAdmin'
+import SMS from '../pages/SMS'
 
 
 const AppsRoutes = () => {
@@ -91,6 +92,7 @@ const AppsRoutes = () => {
                 <Route path='pacientes' element={<ListPatient/>} />
                 <Route path='perfil' element={<PerfilMedico/>} />
                 <Route path='perfil/update/:id' element={<EditMedico/>} />
+                
             </Route>
             
             {/* Turnos */}
@@ -98,7 +100,11 @@ const AppsRoutes = () => {
                 <Route path='create/:id' element={<Turno/>}/>
                 <Route path="update/:id/:appointmentId?" element={<Turno />} />
             </Route>
-            
+
+            {/* Twilio SMS*/}
+            <Route path='/send-sms' element={<SMS/>} />
+
+
             <Route path='*' element={<h1>Page Not Found</h1>} />
         </Routes>
     )
