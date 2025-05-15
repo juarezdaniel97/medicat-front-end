@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { useMedicoContext } from "../../contexts/MedicoContext"
 import { Calendar, Clock } from "lucide-react"
 
 const PerfilMedico = () => {
     const { dataMedico } = useMedicoContext();
     
+    const navigate = useNavigate();
+
     // Función para convertir número de día a nombre
     const getDayName = (dayNumber) => {
         const days = [
@@ -41,6 +44,11 @@ const PerfilMedico = () => {
                         </div>
                         <h3 className="text-lg font-medium text-gray-900 dark:text-white">{dataMedico?.firstName} {dataMedico?.lastName}</h3>
                         <p className="text-sm text-emerald-600 dark:text-emerald-400">{dataMedico?.specialty}</p>
+                        <button
+                            onClick={() => navigate(`update/${dataMedico._id}`) }
+                            className="bg-emerald-600 hover:bg-emerald-700 rounded-md py-2 px-4 text-white mt-4 cursor-pointer">
+                                Editar
+                        </button>
                     </div>
                 </div>
                 <div className="col-span-2 bg-gray-50 dark:bg-gray-600 rounded-lg p-6">
@@ -88,10 +96,9 @@ const PerfilMedico = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div className="bg-white dark:bg-gray-700 shadow-md rounded-lg p-4 m-4 max-w-7xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Datos del Profesional</h2>
+
+            
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-3">Datos del Profesional</h2>
                     
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                 <div className="flex flex-col space-y-2">
@@ -128,7 +135,9 @@ const PerfilMedico = () => {
                     </p>
                 </div>
             </div>
+            </div>
         </div>
+        
         </>
     )
 }

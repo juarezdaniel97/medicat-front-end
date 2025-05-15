@@ -51,7 +51,7 @@ return (
         
         {/* Navigation */}
         <div className='min-h-screen bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white'>
-                <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
+            <main className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6'>
                     <div className='mb-6 border-b border-gray-200 dark:border-gray-700'>
                         
                         <nav className='flex space-x-8 rounded-lg py-3 px-3 max-w-7xl bg-white dark:bg-gray-700'>
@@ -94,9 +94,9 @@ return (
                             </button>
                         </nav>
                     </div>
-                </main>
-                
-                <Outlet/>
+            </main>
+            
+            <Outlet/>
         </div>
 
         {/* Footer */}

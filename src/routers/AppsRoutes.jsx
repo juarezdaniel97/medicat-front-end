@@ -20,6 +20,7 @@ import Favorite from '../pages/patient/Favorite'
 import FormPatient from '../components/forms/FormPatient'
 import EditPatient from '../pages/patient/EditPatient'
 import Turno from '../pages/Turno'
+import EditMedico from '../pages/medico/EditMedico'
 
 const AppsRoutes = () => {
 
@@ -92,6 +93,7 @@ const AppsRoutes = () => {
                 <Route path='agenda' element={<AgendaMedico/>} />
                 <Route path='pacientes' element={<ListPatient/>} />
                 <Route path='perfil' element={<PerfilMedico/>} />
+                <Route path='perfil/update/:id' element={<EditMedico/>} />
             </Route>
             
             {/* Turnos */}
