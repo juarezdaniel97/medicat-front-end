@@ -22,6 +22,7 @@ import EditMedico from '../pages/medico/EditMedico'
 import Home from '../pages/admin/Home'
 import PerfilAdmin from '../pages/admin/PerfilAdmin'
 import SMS from '../pages/SMS'
+import NotFound from '../pages/NotFound'
 
 
 const AppsRoutes = () => {
@@ -105,7 +106,7 @@ const AppsRoutes = () => {
             <Route path='/send-sms' element={<SMS/>} />
 
 
-            <Route path='*' element={<h1>Page Not Found</h1>} />
+            <Route path='*' element={<NotFound/>} />
         </Routes>
     )
 }
