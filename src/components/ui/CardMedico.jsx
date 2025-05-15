@@ -16,7 +16,7 @@ const CardMedico = ({medico}) => {
                     <User className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                    <h3 className="font-medium text-gray-900 dark:text-white">{medico?.firstName} {medico?.lastName}</h3>
+                    <h3 className="font-medium text-gray-900 dark:text-white">Dr. {medico?.firstName} {medico?.lastName}</h3>
                     <span className="text-sm text-gray-500 dark:text-gray-400 mr-5">{medico?.specialty}</span>
                     <span className="text-sm text-gray-500 dark:text-gray-400"> ${medico?.consultationFee || "0.00"}</span>
                     <p className="flex items-center text-sm text-gray-500 dark:text-gray-400"> <Mail size={16} className="mr-2"/> {medico?.userId?.email}</p>
@@ -39,6 +39,7 @@ const CardMedico = ({medico}) => {
 
                 <button
                     onClick={() => navigate(`/turno/create/${medico._id}`)}
+                    //onClick={() => navigate(`/turno/update/${medico._id}`)}
                     className="flex items-center cursor-pointer bg-emerald-600 text-white py-2 px-3 rounded-md hover:bg-emerald-700">
                     Agendar Cita
                     <ChevronRight className="ml-1 h-4 w-4" />

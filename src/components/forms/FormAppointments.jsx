@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import api_appointments, { createAppointmentsApi, getAppointmentsApi, updateAppointmentsApi } from "../../services/appointments";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { usePatientContext } from "../../contexts/PatientContext";
 
 const FormAppointments = ({id_medico, id_patient, appointmentId, isMedico}) => {
 
     const { register, handleSubmit, formState: {errors}, reset } = useForm()
-    
+    const {getAppointment, setAgenda} = usePatientContext();
+
     const navigate = useNavigate();
 
     const [error, setError] = useState(null)
@@ -22,7 +24,6 @@ const FormAppointments = ({id_medico, id_patient, appointmentId, isMedico}) => {
             const fetchAppointment = async () =>{
                 try {
                     const response = await getAppointmentsApi(appointmentId);
-                    console.log('Turno: response.data.patientId ->', response.data.patientId);
                     
                     reset({
                         medicoId: response?.data?.medicoId,
@@ -62,11 +63,15 @@ const FormAppointments = ({id_medico, id_patient, appointmentId, isMedico}) => {
                 //Crear un nuevo turno
                 await createAppointmentsApi(dataAppointment);
             }
+
+            if (id_patient) {
+                const updateAgenda = await getAppointment(id_patient);
+                setAgenda(updateAgenda)
+                // navigate('/patient/agenda')
+            }
             navigate(-1)
 
-            // const response = await createAppointmentsApi(dataAppointment);
-            // if (response) {
-            // }
+            
         } catch (err) {
             setError(err.response?.data?.message || err.message || "Error al guardar un turno");
         } finally {

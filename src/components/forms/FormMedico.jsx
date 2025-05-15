@@ -61,7 +61,8 @@ const FormMedico = ({initialValues, isEditing=false}) => {
         }else{
 
             response = await createMedico(data)
-            navigate('/medico')
+            //navigate('/medico')
+            navigate('/')
         }
     }
 
