@@ -5,7 +5,7 @@ import CardAgendaMedico from "../../components/ui/CardAgendaMedico";
 
 const AgendaMedico = () => {
     const {loading, error, agenda} = useMedicoContext();
-
+    
     return (
         <>
         <div className="bg-white dark:bg-gray-700 rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow-md p-6">

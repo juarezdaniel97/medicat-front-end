@@ -4,10 +4,22 @@ import { usePatientContext } from '../../contexts/PatientContext';
 const Agenda = () => {
     const { loading, error, agenda } = usePatientContext();
     
+    const estadoStyles = {
+        programado:  "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
+        confirmado:  "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+        completado:  "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+        cancelado:   "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+    }
+
+    const estadoLabels = {
+        programado: "Programado",
+        confirmado: "Confirmado",
+        completado: "Completado",
+        cancelado:  "Cancelado"
+    };
+
     return (
         <div className='bg-white dark:bg-gray-700 rounded-lg max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow-md p-6'>
-            
-            {loading && <p>Cargando...</p>}
             
             {/* Filtros por fecha */}
             <div className='mb-6 flex flex-wrap gap-2 items-center p-4 rounded-md'>
@@ -39,9 +51,7 @@ const Agenda = () => {
                                         >
                                             <div className='flex flex-col sm:flex-row sm:items-center mb-3 sm:mb-0'>
                                                 <div className='flex items-center mb-2 sm:mb-0 sm:mr-4'>
-                                                    <div className={`h-10 w-10 rounded-full flex items-center justify-center mr-3 ${
-                                                            cita.estado === 'confirmada' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                            }`}>
+                                                    <div className={`h-10 w-10 rounded-full flex items-center justify-center mr-3 ${estadoStyles[cita.estado] || "bg-gray-200 text-gray-700"}`}>
                                                         <Clock className="h-5 w-5" />
                                                     </div>
                                                     <div>
@@ -59,12 +69,9 @@ const Agenda = () => {
 
                                             </div>
                                             <div className='flex items-center space-x-2'>
-                                                <span className={`px-2 py-1 text-xs rounded-full ${
-                                                        cita.estado === 'confirmada' 
-                                                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-                                                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                    }`}>
-                                                        {cita.estado === 'programado' ? 'Programado' : 'Cancelado'}
+                                                <span
+                                                    className={`px-2 py-1 text-xs rounded-full ${estadoStyles[cita.estado] || "bg-gray-200 text-gray-700"}`}>
+                                                    {estadoLabels[cita.estado] || cita.estado}
                                                 </span>
                                                 <button className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 text-sm font-medium">
                                                     Detalles

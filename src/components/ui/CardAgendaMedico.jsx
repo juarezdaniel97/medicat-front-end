@@ -8,8 +8,20 @@ const CardAgendaMedico = ({cita}) => {
     
     const {dataMedico} = useMedicoContext();
 
-    console.log('dataMedico ->', dataMedico);
     
+    const estadoStyles = {
+        programado:  "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
+        confirmado:  "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+        completado:  "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+        cancelado:   "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+    }
+
+    const estadoLabels = {
+        programado: "Programado",
+        confirmado: "Confirmado",
+        completado: "Completado",
+        cancelado:  "Cancelado"
+    };
 
     return (
         <div 
@@ -18,9 +30,7 @@ const CardAgendaMedico = ({cita}) => {
             >
             <div className='flex flex-col sm:flex-row sm:items-center mb-3 sm:mb-0'>
                 <div className='flex items-center mb-2 sm:mb-0 sm:mr-4'>
-                    <div className={`h-10 w-10 rounded-full flex items-center justify-center mr-3 ${
-                            cita.estado === 'completado' ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400'
-                            }`}>
+                    <div className={`h-10 w-10 rounded-full flex items-center justify-center mr-3 ${estadoStyles[cita.estado] || "bg-gray-200 text-gray-700"}`}>
                         <Clock className="h-5 w-5" />
                     </div>
                     <div>
@@ -34,12 +44,9 @@ const CardAgendaMedico = ({cita}) => {
                 </div>
             </div>
             <div className='flex items-center space-x-2'>
-                <span className={`px-2 py-1 text-xs rounded-full ${
-                        cita.estado === 'completado' 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                    }`}>
-                        {cita.estado === 'completado' ? 'Completado' : 'Programado'}
+                <span
+                    className={`px-2 py-1 text-xs rounded-full ${estadoStyles[cita.estado] || "bg-gray-200 text-gray-700"}`}>
+                        {estadoLabels[cita.estado] || cita.estado}
                 </span>
                 <button 
                     onClick={() => navigate(`/turno/update/${dataMedico._id}/${cita.turnoId}`)}
